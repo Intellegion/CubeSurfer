@@ -60,14 +60,12 @@ public class LevelGenerator : MonoBehaviour
                     }
 
                 case ChunkType.Slime:
-                    {
-
-                        
+                    {                        
                         break;
                     }
                 default:
                     {
-                        continue;
+                        break;
                     }
             }
 
@@ -134,7 +132,6 @@ public class LevelGenerator : MonoBehaviour
                     }
             }
         }
-
 
         levelData.Chunks = chunks;
         EditorUtility.SetDirty(levelData);
