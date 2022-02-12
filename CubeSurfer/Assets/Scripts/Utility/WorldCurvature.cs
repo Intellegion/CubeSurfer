@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class WorldCurvature : MonoBehaviour
 {
-    [Range(-0.015f, 0.015f)]
+    [Range(-0.02f, 0.02f)]
     public float Curvature;
 
-    [Range(-0.015f, 0.015f)]
+    [Range(-0.02f, 0.02f)]
     public float Turn;
-
-    [Range(-0.015f, 0.015f)]
-    public float Rotation;
-
 
     public Material[] Materials;
 
@@ -31,6 +27,6 @@ public class WorldCurvature : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(Vector3.forward * 3 * Time.deltaTime);
+        transform.Translate(Vector3.forward * 7 * Time.deltaTime, Space.World);
     }
 }
