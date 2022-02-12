@@ -56,8 +56,6 @@ public class LevelGenerator : MonoBehaviour
             {
                 case ChunkType.Obstacle:
                     {
-
-
                         break;
                     }
 
