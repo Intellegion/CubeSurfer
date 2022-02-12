@@ -20,7 +20,9 @@ public class LevelGenerator : MonoBehaviour
     private Chunk[] chunks;
 
     private Direction currentDirection;
+    private Direction previousDirection;
     private float currentSpawnX;
+
     private float currentSpawnZ;
 
     private GameObject obstacle;
@@ -30,7 +32,10 @@ public class LevelGenerator : MonoBehaviour
     private void Start()
     {
         chunks = new Chunk[10];
+
         currentDirection = Direction.Straight;
+        previousDirection = Direction.Straight;
+
         currentSpawnX = 0;
         currentSpawnZ = 0;
 
@@ -44,15 +49,11 @@ public class LevelGenerator : MonoBehaviour
 
         for (int i = 1; i < 10; i++)
         {
-            chunks[i] = GenerateChunk(i);
-        }
-
-        foreach(Chunk chunk in chunks)
-        {
+            chunks[i] = GenerateChunk();
             path = Instantiate(pathObject, transform, false);
             path.transform.position = new Vector3(currentSpawnX, 0, currentSpawnZ);
             path.transform.rotation = Quaternion.Euler(0, currentDirection == Direction.Straight ? 0 : 90, 0);
-            switch (chunk.Type)
+            switch (chunks[i].Type)
             {
                 case ChunkType.Obstacle:
                     {
@@ -69,7 +70,7 @@ public class LevelGenerator : MonoBehaviour
                     }
             }
 
-            switch (chunk.TurnDirection)
+            switch (chunks[i].TurnDirection)
             {
                 case Direction.Left:
                     {
@@ -87,6 +88,10 @@ public class LevelGenerator : MonoBehaviour
                             arch.transform.rotation = Quaternion.Euler(new Vector3(90, 90, 0));
                             currentSpawnX += 22.5f;
                             currentDirection = Direction.Straight;
+                        }
+                        else
+                        {
+                            Debug.Log("test");
                         }
 
                         currentSpawnZ += 22.5f;
@@ -109,13 +114,16 @@ public class LevelGenerator : MonoBehaviour
                             currentSpawnX -= 22.5f;
                             currentDirection = Direction.Straight;
                         }
-
+                        else
+                        {
+                            Debug.Log("test1");
+                        }
                         currentSpawnZ += 22.5f;
                         break;
                     }
                 default:
                     {
-                        if (currentDirection == Direction.Straight)
+                        if (currentDirection == Direction.Straight )
                         {
                             currentSpawnZ += 30;
                         }
@@ -139,7 +147,7 @@ public class LevelGenerator : MonoBehaviour
         AssetDatabase.SaveAssets();
     }
 
-    private Chunk GenerateChunk(int index)
+    private Chunk GenerateChunk()
     {
         Chunk chunk = new Chunk();
         int random;
@@ -170,12 +178,12 @@ public class LevelGenerator : MonoBehaviour
         {
             chunk.TurnDirection = Random.Range(0, 2) == 0 ? Direction.Left : Direction.Right;
 
-            if (chunks[index - 1].TurnDirection == Direction.Left)
+            if (currentDirection == Direction.Left)
             {
                 chunk.TurnDirection = Direction.Right;         
             }
 
-            else if (chunks[index - 1].TurnDirection == Direction.Right)
+            else if (currentDirection == Direction.Right)
             {
                 chunk.TurnDirection = Direction.Left;
             }
@@ -184,6 +192,7 @@ public class LevelGenerator : MonoBehaviour
         {
             chunk.TurnDirection = Direction.Straight;
         }
+
         return chunk;
     }
 }
