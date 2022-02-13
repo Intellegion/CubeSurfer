@@ -18,6 +18,7 @@ public class CollisionDetection : MonoBehaviour
     {
         surfacePosition = new Vector3(0, 0.5f, 0);
         playerMovement = transform.parent.GetComponent<PlayerMovement>();
+        StartCoroutine(ClearSplashes());
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -25,7 +26,7 @@ public class CollisionDetection : MonoBehaviour
         if (collision.collider.tag.Equals("obstacle"))
         {
             transform.parent = null;
-            playerMovement.DecrementCube(collision.collider.gameObject);
+            playerMovement.DecrementCube(gameObject);
         }
 
         else if (collision.collider.tag.Equals("path"))
@@ -129,6 +130,25 @@ public class CollisionDetection : MonoBehaviour
         while(true)
         {
             playerMovement.DecrementCube();
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    private IEnumerator ClearSplashes()
+    {
+        while (playerMovement.splashes.Count == 0)
+        {
+            yield return new WaitForSeconds(1);
+        }
+
+        while (playerMovement.splashes.Count != 0)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Destroy(playerMovement.splashes[i]);
+                playerMovement.splashes.RemoveAt(i);
+            }
+
             yield return new WaitForSeconds(0.1f);
         }
     }

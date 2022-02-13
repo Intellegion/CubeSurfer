@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Velocity: 17
   Sensitivity: 7
+  initialCube: {fileID: 2456759599886250697}
   PlayerCube: {fileID: 8674091693304017004, guid: 8583346c8b877394d8ce1c9e0d729faf,
     type: 3}
   Score: 0
@@ -161,6 +162,12 @@ PrefabInstance:
 --- !u!4 &2057598676833985493 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5113475357010141552, guid: 8583346c8b877394d8ce1c9e0d729faf,
+    type: 3}
+  m_PrefabInstance: {fileID: 6519164587014439589}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2456759599886250697 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8674091693304017004, guid: 8583346c8b877394d8ce1c9e0d729faf,
     type: 3}
   m_PrefabInstance: {fileID: 6519164587014439589}
   m_PrefabAsset: {fileID: 0}

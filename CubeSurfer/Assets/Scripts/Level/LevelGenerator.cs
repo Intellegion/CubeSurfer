@@ -15,6 +15,9 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     private GameObject archObject;
 
+    [SerializeField]
+    private GameObject endObject;
+
     private LevelData[] levelData;
 
     private Chunk[] chunks;
@@ -49,12 +52,18 @@ public class LevelGenerator : MonoBehaviour
         levelData[Level] = ScriptableObject.CreateInstance<LevelData>();
         chunks[0] = Chunk.GetBasicChunk(new Chunk());
 
+
+        path = Instantiate(pathObject, transform, false);
+        path.transform.position = new Vector3(currentSpawnX, 0, currentSpawnZ);
+        currentSpawnZ += 30;
+
         for (int i = 1; i < 10; i++)
         {
             chunks[i] = GenerateChunk();
             path = Instantiate(pathObject, transform, false);
             path.transform.position = new Vector3(currentSpawnX, 0, currentSpawnZ);
             path.transform.rotation = Quaternion.Euler(0, currentDirection == Direction.Straight ? 0 : 90, 0);
+
             switch (chunks[i].Type)
             {
                 case ChunkType.Obstacle:
@@ -96,10 +105,6 @@ public class LevelGenerator : MonoBehaviour
                             currentSpawnX += 22.5f;
                             currentDirection = Direction.Straight;
                         }
-                        else
-                        {
-                            Debug.Log("test");
-                        }
 
                         currentSpawnZ += 22.5f;
                         break;
@@ -121,10 +126,7 @@ public class LevelGenerator : MonoBehaviour
                             currentSpawnX -= 22.5f;
                             currentDirection = Direction.Straight;
                         }
-                        else
-                        {
-                            Debug.Log("test1");
-                        }
+
                         currentSpawnZ += 22.5f;
                         break;
                     }
@@ -146,6 +148,33 @@ public class LevelGenerator : MonoBehaviour
                         break;
                     }
             }
+        }
+
+        switch(currentDirection)
+        {
+            case Direction.Straight:
+                {
+                    GameObject end = Instantiate(endObject, transform, false);
+                    end.transform.position = new Vector3(currentSpawnX, 1.5f, currentSpawnZ + 20.5f);
+                    end.transform.SetParent(transform);
+                    break;
+                }
+            case Direction.Left:
+                {
+                    GameObject end = Instantiate(endObject, transform, false);
+                    end.transform.position = new Vector3(currentSpawnX - 20.5f, 1.5f, currentSpawnZ);
+                    end.transform.rotation = Quaternion.Euler(0, -90, 0); 
+                    end.transform.SetParent(transform);
+                    break;
+                }
+            default:
+                {
+                    GameObject end = Instantiate(endObject, transform, false);
+                    end.transform.SetParent(transform);
+                    end.transform.rotation = Quaternion.Euler(0, 90, 0);
+                    end.transform.position = new Vector3(currentSpawnX + 20.5f, 1.5f, currentSpawnZ);
+                    break;
+                }
         }
 
         SaveLevel(levelName);     

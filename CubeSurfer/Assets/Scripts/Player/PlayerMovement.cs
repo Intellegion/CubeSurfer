@@ -12,6 +12,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float Sensitivity;
 
+    [SerializeField]
+    private GameObject initialCube;
+
     public GameObject PlayerCube;
 
     public int Score;
@@ -39,6 +42,8 @@ public class PlayerMovement : MonoBehaviour
         CanControl = true;
         numberOfCubes = 1;
         movementVector = new Vector2();
+
+        cubes.Add(initialCube);
     }
 
     // Update is called once per frame
@@ -117,12 +122,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 cubes.Remove(cube);
             }
-            else
-            {
-                return;
-            }
         }
-
         else
         {
             if (cubes.Count > 0)
@@ -130,12 +130,11 @@ public class PlayerMovement : MonoBehaviour
                 cubes[cubes.Count - 1].SetActive(false);
                 cubes.RemoveAt(cubes.Count - 1);
             }
-            else
-            {
-                return;
-            }
         }
 
-        numberOfCubes--;
+        if (cubes.Count == 0)
+        {
+            Velocity = 0;
+        }
     }
 }
