@@ -104,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
     public void IncrementCube()
     {
         GameObject go = Instantiate(PlayerCube, transform, false);
-        go.transform.localPosition = Vector3.up * 0.5f * numberOfCubes;
+        go.transform.localPosition = Vector3.up * numberOfCubes;
         cubes.Add(go);
         numberOfCubes++;
     }

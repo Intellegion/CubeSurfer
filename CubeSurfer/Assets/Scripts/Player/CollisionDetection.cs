@@ -7,45 +7,17 @@ public class CollisionDetection : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     private int finalRotation;
-    int layerMask;
 
     [SerializeField]
     private GameObject splashObject;
 
     private GameObject splash;
 
+    private Vector3 surfacePosition;
     private void Start()
     {
-        layerMask = 1 << 6;
-
+        surfacePosition = new Vector3(0, 0.5f, 0);
         playerMovement = transform.parent.GetComponent<PlayerMovement>();
-        StartCoroutine(ClearSplash());
-    }
-
-    private void Update()
-    {
-        RaycastHit hit;
-        layerMask = ~layerMask;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerMask))
-        {
-            splash = Instantiate(splashObject, hit.point, Quaternion.identity);
-            playerMovement.splashes.Add(splash);
-        }
-    }
-
-    private IEnumerator ClearSplash()
-    {
-        while(playerMovement.splashes.Count == 0)
-        {
-            yield return new WaitForSeconds(0.3f);
-        }
-
-        while (playerMovement.splashes.Count != 0)
-        {
-            Destroy(playerMovement.splashes[0]);
-            playerMovement.splashes.RemoveAt(0);
-            yield return new WaitForSeconds(0.01f);
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -99,6 +71,15 @@ public class CollisionDetection : MonoBehaviour
         else if (collision.collider.tag.Equals("slime"))
         {
             StartCoroutine(DecrementCubes());
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.collider.gameObject.layer == 6)
+        {
+            splash = Instantiate(splashObject, (transform.position - surfacePosition) + Vector3.up * 0.01f, Quaternion.identity);
+            playerMovement.splashes.Add(splash);
         }
     }
 
