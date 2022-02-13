@@ -7,11 +7,47 @@ public class CollisionDetection : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     private int finalRotation;
+    int layerMask;
+
+    [SerializeField]
+    private GameObject splashObject;
+
+    private GameObject splash;
 
     private void Start()
     {
+        layerMask = 1 << 6;
+
         playerMovement = transform.parent.GetComponent<PlayerMovement>();
+        StartCoroutine(ClearSplash());
     }
+
+    private void Update()
+    {
+        RaycastHit hit;
+        layerMask = ~layerMask;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerMask))
+        {
+            splash = Instantiate(splashObject, hit.point, Quaternion.identity);
+            playerMovement.splashes.Add(splash);
+        }
+    }
+
+    private IEnumerator ClearSplash()
+    {
+        while(playerMovement.splashes.Count == 0)
+        {
+            yield return new WaitForSeconds(0.3f);
+        }
+
+        while (playerMovement.splashes.Count != 0)
+        {
+            Destroy(playerMovement.splashes[0]);
+            playerMovement.splashes.RemoveAt(0);
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.tag.Equals("obstacle"))
@@ -96,13 +132,13 @@ public class CollisionDetection : MonoBehaviour
     {
         if (other.tag.Equals("pickup"))
         {
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
             playerMovement.IncrementCube();
         }
 
         else if (other.tag.Equals("coin"))
         {
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
             playerMovement.Score++;
         }
     }

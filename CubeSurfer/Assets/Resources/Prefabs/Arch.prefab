@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3809596772390072522}
   - component: {fileID: 3809596772390072525}
   - component: {fileID: 3809596772390072524}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Arch
   m_TagString: turning
   m_Icon: {fileID: 0}

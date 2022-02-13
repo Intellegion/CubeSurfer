@@ -19,47 +19,47 @@ MonoBehaviour:
     ShouldTurn: 0
     TurnDirection: 0
   - Type: 1
-    ObstacleCount: 3
-    SlimeCount: 3
+    ObstacleCount: 0
+    SlimeCount: 1
     ShouldTurn: 0
     TurnDirection: 0
   - Type: 1
-    ObstacleCount: 2
-    SlimeCount: 3
+    ObstacleCount: 0
+    SlimeCount: 1
     ShouldTurn: 1
-    TurnDirection: 2
+    TurnDirection: 1
   - Type: 1
     ObstacleCount: 1
     SlimeCount: 0
     ShouldTurn: 0
     TurnDirection: 0
   - Type: 1
-    ObstacleCount: 4
-    SlimeCount: 3
-    ShouldTurn: 0
-    TurnDirection: 0
-  - Type: 1
-    ObstacleCount: 5
-    SlimeCount: 0
-    ShouldTurn: 0
-    TurnDirection: 0
-  - Type: 1
     ObstacleCount: 3
-    SlimeCount: 3
-    ShouldTurn: 0
-    TurnDirection: 0
-  - Type: 1
-    ObstacleCount: 2
-    SlimeCount: 2
-    ShouldTurn: 0
-    TurnDirection: 0
-  - Type: 1
-    ObstacleCount: 4
     SlimeCount: 0
+    ShouldTurn: 0
+    TurnDirection: 0
+  - Type: 1
+    ObstacleCount: 0
+    SlimeCount: 1
+    ShouldTurn: 1
+    TurnDirection: 2
+  - Type: 1
+    ObstacleCount: 0
+    SlimeCount: 1
+    ShouldTurn: 1
+    TurnDirection: 2
+  - Type: 1
+    ObstacleCount: 0
+    SlimeCount: 1
     ShouldTurn: 1
     TurnDirection: 1
   - Type: 1
     ObstacleCount: 3
-    SlimeCount: 3
-    ShouldTurn: 1
-    TurnDirection: 2
+    SlimeCount: 0
+    ShouldTurn: 0
+    TurnDirection: 0
+  - Type: 1
+    ObstacleCount: 0
+    SlimeCount: 2
+    ShouldTurn: 0
+    TurnDirection: 0

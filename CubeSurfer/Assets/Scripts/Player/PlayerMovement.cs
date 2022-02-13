@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     private float xInput;
 
     private List<GameObject> cubes = new List<GameObject>();
+    public List<GameObject> splashes = new List<GameObject>();
 
     void Start()
     {
@@ -126,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (cubes.Count > 0)
             {
-                Destroy(cubes[cubes.Count - 1]);
+                cubes[cubes.Count - 1].SetActive(false);
                 cubes.RemoveAt(cubes.Count - 1);
             }
             else
