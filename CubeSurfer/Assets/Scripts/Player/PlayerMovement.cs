@@ -16,8 +16,6 @@ public class PlayerMovement : MonoBehaviour
 
     public int Score;
 
-    private LevelGenerator levelGenerator;
-
     public Direction currentDirection;
 
     public bool CanControl;
@@ -32,16 +30,14 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 movementVector;
     private float xInput;
 
-    private Rigidbody rb;
+    private List<GameObject> cubes = new List<GameObject>();
 
     void Start()
     {
         currentDirection = Direction.Straight;
         CanControl = true;
         numberOfCubes = 1;
-        rb = GetComponent<Rigidbody>();
         movementVector = new Vector2();
-        levelGenerator = FindObjectOfType<LevelGenerator>();
     }
 
     // Update is called once per frame
@@ -101,21 +97,44 @@ public class PlayerMovement : MonoBehaviour
             }
 
             transform.position = movementVector;
-
-            Debug.Log(XClampMin + ", X " + XClampMax);
-            Debug.Log(ZClampMin + ", Z " + ZClampMax);
         }
     }
 
     public void IncrementCube()
     {
         GameObject go = Instantiate(PlayerCube, transform, false);
-        go.transform.localPosition = Vector3.up * numberOfCubes;
+        go.transform.localPosition = Vector3.up * 0.5f * numberOfCubes;
+        cubes.Add(go);
         numberOfCubes++;
     }
 
-    public void DecrementCube()
+    public void DecrementCube(GameObject cube = null)
     {
+        if (cube != null)
+        {
+            if (cubes.Contains(cube))
+            {
+                cubes.Remove(cube);
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        else
+        {
+            if (cubes.Count > 0)
+            {
+                Destroy(cubes[cubes.Count - 1]);
+                cubes.RemoveAt(cubes.Count - 1);
+            }
+            else
+            {
+                return;
+            }
+        }
+
         numberOfCubes--;
     }
 }

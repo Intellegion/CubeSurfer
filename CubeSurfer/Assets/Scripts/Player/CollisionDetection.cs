@@ -17,6 +17,7 @@ public class CollisionDetection : MonoBehaviour
         if (collision.collider.tag.Equals("obstacle"))
         {
             transform.parent = null;
+            playerMovement.DecrementCube(collision.collider.gameObject);
         }
 
         else if (collision.collider.tag.Equals("path"))
@@ -58,6 +59,19 @@ public class CollisionDetection : MonoBehaviour
                 });
             }
         }  
+
+        else if (collision.collider.tag.Equals("slime"))
+        {
+            StartCoroutine(DecrementCubes());
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if(collision.collider.tag.Equals("slime"))
+        {
+            StopAllCoroutines();
+        }
     }
 
     private void SetParentDirection()
@@ -80,10 +94,25 @@ public class CollisionDetection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Equals("obstacle"))
+        if (other.tag.Equals("pickup"))
         {
+            Destroy(other.gameObject);
             playerMovement.IncrementCube();
+        }
+
+        else if (other.tag.Equals("coin"))
+        {
+            Destroy(other.gameObject);
+            playerMovement.Score++;
         }
     }
 
+    private IEnumerator DecrementCubes()
+    {
+        while(true)
+        {
+            playerMovement.DecrementCube();
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
 }
