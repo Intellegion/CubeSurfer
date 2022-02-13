@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Rigidbody rb;
+
     [SerializeField]
     private float Velocity;
 
@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     private float Sensitivity;
 
     public GameObject PlayerCube;
+
+    public int Score;
 
     private LevelGenerator levelGenerator;
 
@@ -29,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 movementVector;
     private float xInput;
+
+    private Rigidbody rb;
 
     void Start()
     {
@@ -65,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
                     movementVector.x += xInput;
                 }
             }
-            else
+            else if (currentDirection == Direction.Left)
             {
                 if (transform.position.z + xInput > ZClampMax)
                 {
@@ -78,6 +82,21 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     movementVector.z += xInput;
+                }
+            }
+            else
+            {
+                if (transform.position.z - xInput > ZClampMax)
+                {
+                    movementVector.z = ZClampMax;
+                }
+                else if (transform.position.z - xInput < ZClampMin)
+                {
+                    movementVector.z = ZClampMin;
+                }
+                else
+                {
+                    movementVector.z -= xInput;
                 }
             }
 
