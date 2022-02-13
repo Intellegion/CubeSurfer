@@ -113,6 +113,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   splashObject: {fileID: 5779372482962015623, guid: fcc1332b1d555544a93f36b9839edba7,
     type: 3}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!54 &6826573056119298214
 Rigidbody:
   m_ObjectHideFlags: 0

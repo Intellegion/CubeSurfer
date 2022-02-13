@@ -20,7 +20,7 @@ public class Chunk
 {
     public ChunkType Type;
 
-    [Range(1, 5)]
+    [Range(0, 5)]
     public int ObstacleCount;
 
     [Range(0, 3)]

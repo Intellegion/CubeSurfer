@@ -15,11 +15,10 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     private GameObject archObject;
 
-    private LevelData levelData;
+    private LevelData[] levelData;
 
     private Chunk[] chunks;
 
-    public Direction currentDirection;
 
     private float currentSpawnX;
 
@@ -29,21 +28,25 @@ public class LevelGenerator : MonoBehaviour
     private GameObject path;
     private GameObject arch;
 
+    public Direction currentDirection;
+    public int Level = 0;
+
     private void Start()
     {
         chunks = new Chunk[10];
 
+        levelData = new LevelData[3];
         currentDirection = Direction.Straight;
 
         currentSpawnX = 0;
         currentSpawnZ = 0;
 
-        GenerateLevel("Test");
+        GenerateLevel("Level " + Level.ToString());
     }        
 
     public void GenerateLevel(string levelName)
     {
-        levelData = ScriptableObject.CreateInstance<LevelData>();
+        levelData[Level] = ScriptableObject.CreateInstance<LevelData>();
         chunks[0] = Chunk.GetBasicChunk(new Chunk());
 
         for (int i = 1; i < 10; i++)
@@ -67,6 +70,11 @@ public class LevelGenerator : MonoBehaviour
                     {
                         break;
                     }
+            }
+
+            if (i == 9)
+            {
+                break;
             }
 
             switch (chunks[i].TurnDirection)
@@ -140,9 +148,14 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        levelData.Chunks = chunks;
-        EditorUtility.SetDirty(levelData);
-        AssetDatabase.CreateAsset(levelData, "Assets/Levels/" + levelName + ".asset");
+        SaveLevel(levelName);     
+    }
+
+    private void SaveLevel(string levelName)
+    {
+        levelData[Level].Chunks = chunks;
+        EditorUtility.SetDirty(levelData[Level]);
+        AssetDatabase.CreateAsset(levelData[Level], "Assets/Resources/Levels/" + levelName + ".asset");
         AssetDatabase.SaveAssets();
     }
 
@@ -159,14 +172,15 @@ public class LevelGenerator : MonoBehaviour
             case ChunkType.Obstacle:
                 {
                     chunk = Chunk.GetObstacleChunk(chunk);
-                    chunk.ObstacleCount = Random.Range(1, 5);
+                    chunk.ObstacleCount = Random.Range(1, 6);
+                    chunk.SlimeCount = 0;
                     break;
                 }
             case ChunkType.Slime:
                 {
                     chunk = Chunk.GetSlimeChunk(chunk);
-                    chunk.ObstacleCount = Random.Range(1, 3);
-                    chunk.SlimeCount = Random.Range(1, 3);
+                    chunk.ObstacleCount = 0;
+                    chunk.SlimeCount = Random.Range(1, 4);
                     break;
                 }
         }
