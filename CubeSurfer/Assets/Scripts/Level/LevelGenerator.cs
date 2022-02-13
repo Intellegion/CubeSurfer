@@ -19,8 +19,8 @@ public class LevelGenerator : MonoBehaviour
 
     private Chunk[] chunks;
 
-    private Direction currentDirection;
-    private Direction previousDirection;
+    public Direction currentDirection;
+
     private float currentSpawnX;
 
     private float currentSpawnZ;
@@ -34,7 +34,6 @@ public class LevelGenerator : MonoBehaviour
         chunks = new Chunk[10];
 
         currentDirection = Direction.Straight;
-        previousDirection = Direction.Straight;
 
         currentSpawnX = 0;
         currentSpawnZ = 0;
@@ -160,14 +159,14 @@ public class LevelGenerator : MonoBehaviour
             case ChunkType.Obstacle:
                 {
                     chunk = Chunk.GetObstacleChunk(chunk);
-                    chunk.ObstacleCount = Random.Range(1, 6);
+                    chunk.ObstacleCount = Random.Range(1, 5);
                     break;
                 }
             case ChunkType.Slime:
                 {
                     chunk = Chunk.GetSlimeChunk(chunk);
-                    chunk.ObstacleCount = Random.Range(1, 6);
-                    chunk.SlimeCount = Random.Range(1, 4);
+                    chunk.ObstacleCount = Random.Range(1, 3);
+                    chunk.SlimeCount = Random.Range(1, 3);
                     break;
                 }
         }

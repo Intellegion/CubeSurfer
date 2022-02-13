@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3717819745648909320}
   - component: {fileID: 1672059409265411707}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,8 +45,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a56edd393b1bbc242aed10520cca4309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 0
-  player: {fileID: 8674091693304017004, guid: 8583346c8b877394d8ce1c9e0d729faf, type: 3}
+  Velocity: 20
+  Sensitivity: 10
+  PlayerCube: {fileID: 8674091693304017004, guid: 8583346c8b877394d8ce1c9e0d729faf,
+    type: 3}
+  currentDirection: 0
+  CanControl: 0
+  XClampMin: 0
+  XClampMax: 0
+  ZClampMin: 0
+  ZClampMax: 0
 --- !u!1001 &6519164587014439589
 PrefabInstance:
   m_ObjectHideFlags: 0
