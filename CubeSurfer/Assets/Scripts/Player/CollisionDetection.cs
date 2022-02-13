@@ -19,6 +19,22 @@ public class CollisionDetection : MonoBehaviour
             transform.parent = null;
         }
 
+        else if (collision.collider.tag.Equals("path"))
+        {
+            if (playerMovement.currentDirection == Direction.Straight)
+            {
+                playerMovement.XClampMin = collision.collider.transform.position.x - collision.collider.transform.localScale.x / 2 + 0.275f;
+                playerMovement.XClampMax = collision.collider.transform.position.x + collision.collider.transform.localScale.x / 2 - 0.275f;
+            }
+
+            else
+            {
+                playerMovement.ZClampMin = collision.collider.transform.position.z - collision.collider.transform.localScale.x / 2 + 0.275f;
+                playerMovement.ZClampMax = collision.collider.transform.position.z + collision.collider.transform.localScale.x / 2 - 0.275f;
+            }
+
+        }
+
         else if (collision.collider.tag.Equals("turning"))
         {
             playerMovement.CanControl = false;
@@ -26,7 +42,7 @@ public class CollisionDetection : MonoBehaviour
             {
                 finalRotation = (int)transform.parent.rotation.eulerAngles.y - 90;
                 SetParentDirection();
-                transform.parent.DORotate(new Vector3(0, finalRotation, 0), 0.75f).OnComplete(delegate
+                transform.parent.DORotate(new Vector3(0, finalRotation, 0), 1).OnComplete(delegate
                     {
                         playerMovement.CanControl = true;           
                     });
@@ -36,28 +52,12 @@ public class CollisionDetection : MonoBehaviour
             {
                 finalRotation = (int)transform.parent.rotation.eulerAngles.y + 90;
                 SetParentDirection();
-                transform.parent.DORotate(new Vector3(0, finalRotation, 0), 0.75f).OnComplete(delegate
+                transform.parent.DORotate(new Vector3(0, finalRotation, 0), 1).OnComplete(delegate
                 {
                     playerMovement.CanControl = true;
                 });
             }
-        }
-
-        else if (collision.collider.tag.Equals("path"))
-        {
-            if (playerMovement.currentDirection == Direction.Straight)
-            {
-                playerMovement.XClampMin = collision.collider.transform.position.x - collision.collider.transform.localScale.x / 2;
-                playerMovement.XClampMax = collision.collider.transform.position.x + collision.collider.transform.localScale.x / 2;
-            }
-
-            else
-            {
-                playerMovement.ZClampMin = collision.collider.transform.position.z - collision.collider.transform.localScale.x / 2;
-                playerMovement.ZClampMax = collision.collider.transform.position.z + collision.collider.transform.localScale.x / 2f;
-            }
-
-        }
+        }  
     }
 
     private void SetParentDirection()

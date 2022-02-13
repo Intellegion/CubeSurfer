@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a56edd393b1bbc242aed10520cca4309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Velocity: 20
-  Sensitivity: 10
+  Velocity: 17
+  Sensitivity: 7
   PlayerCube: {fileID: 8674091693304017004, guid: 8583346c8b877394d8ce1c9e0d729faf,
     type: 3}
   currentDirection: 0

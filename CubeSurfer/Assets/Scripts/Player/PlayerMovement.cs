@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     private int numberOfCubes;
 
     private Vector3 movementVector;
+    private float xInput;
 
     void Start()
     {
@@ -46,24 +47,41 @@ public class PlayerMovement : MonoBehaviour
 
         if (CanControl)
         {
-            movementVector.x = Input.GetAxis("Horizontal");
+            xInput = Input.GetAxisRaw("Horizontal") * Sensitivity * Time.deltaTime;
+            movementVector = transform.position;
 
             if (currentDirection == Direction.Straight)
             {
-                if (transform.position.x + movementVector.x > XClampMax || transform.position.x + movementVector.x < XClampMin)
+                if (transform.position.x + xInput > XClampMax)
                 {
-                    return;
+                    movementVector.x = XClampMax;
+                }
+                else if (transform.position.x + xInput < XClampMin)
+                {
+                    movementVector.x = XClampMin;
+                }
+                else
+                {
+                    movementVector.x += xInput;
                 }
             }
             else
             {
-                if (transform.position.z + movementVector.x > ZClampMax || transform.position.z + movementVector.x < XClampMin)
+                if (transform.position.z + xInput > ZClampMax)
                 {
-                    return;
+                    movementVector.z = ZClampMax;
+                }
+                else if (transform.position.z + xInput < ZClampMin)
+                {
+                    movementVector.z = ZClampMin;
+                }
+                else
+                {
+                    movementVector.z += xInput;
                 }
             }
 
-            transform.Translate(movementVector * Sensitivity * Time.deltaTime);
+            transform.position = movementVector;
 
             Debug.Log(XClampMin + ", X " + XClampMax);
             Debug.Log(ZClampMin + ", Z " + ZClampMax);
