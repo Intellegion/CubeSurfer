@@ -7,6 +7,9 @@ TagManager:
   - obstacle
   - turning
   - path
+  - coin
+  - slime
+  - pickup
   layers:
   - Default
   - TransparentFX
