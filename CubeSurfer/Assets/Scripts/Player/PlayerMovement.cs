@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 movementVector;
     private float xInput;
 
-    private List<GameObject> cubes = new List<GameObject>();
+    public List<GameObject> cubes = new List<GameObject>();
     public List<GameObject> splashes = new List<GameObject>();
 
     void Start()
@@ -121,6 +121,7 @@ public class PlayerMovement : MonoBehaviour
             if (cubes.Contains(cube))
             {
                 cubes.Remove(cube);
+                Destroy(cube);
             }
         }
         else

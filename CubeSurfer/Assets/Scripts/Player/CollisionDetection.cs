@@ -27,10 +27,19 @@ public class CollisionDetection : MonoBehaviour
         {
             transform.parent = null;
             playerMovement.DecrementCube(gameObject);
+            foreach (GameObject child in playerMovement.cubes)
+            {
+                child.GetComponent<Rigidbody>().constraints = ~RigidbodyConstraints.FreezePositionY;
+            }
         }
 
         else if (collision.collider.tag.Equals("path"))
         {
+            foreach (GameObject child in playerMovement.cubes)
+            {
+                child.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            }
+
             if (playerMovement.currentDirection == Direction.Straight)
             {
                 playerMovement.XClampMin = collision.collider.transform.position.x - collision.collider.transform.localScale.x / 2 + 0.5f;
@@ -136,20 +145,23 @@ public class CollisionDetection : MonoBehaviour
 
     private IEnumerator ClearSplashes()
     {
-        while (playerMovement.splashes.Count == 0)
+        while (true)
         {
-            yield return new WaitForSeconds(1);
-        }
-
-        while (playerMovement.splashes.Count != 0)
-        {
-            for (int i = 0; i < 5; i++)
+            if (playerMovement.splashes.Count >= 5)
             {
-                Destroy(playerMovement.splashes[i]);
-                playerMovement.splashes.RemoveAt(i);
+                for (int i = 0; i < 5; i++)
+                {
+                    Destroy(playerMovement.splashes[i]);
+                    playerMovement.splashes.RemoveAt(i);
+                }
+
+                yield return new WaitForSeconds(0.3f);
             }
 
-            yield return new WaitForSeconds(0.1f);
+            else
+            {
+                yield return new WaitForSeconds(1);
+            }
         }
     }
 }
