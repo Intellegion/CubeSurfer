@@ -10,25 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a15292fa1f65bc42b5b556d400f7967, type: 3}
-  m_Name: Level 0
+  m_Name: Level 1
   m_EditorClassIdentifier: 
   Chunks:
   - Type: 0
     Obstacle:
       Type: 0
       SpawnPosition: 0
-    ShouldTurn: 0
-    TurnDirection: 0
-  - Type: 2
-    Obstacle:
-      Type: 0
-      SpawnPosition: 0
-    ShouldTurn: 1
-    TurnDirection: 1
-  - Type: 1
-    Obstacle:
-      Type: 7
-      SpawnPosition: 12
     ShouldTurn: 0
     TurnDirection: 0
   - Type: 1
@@ -39,13 +27,13 @@ MonoBehaviour:
     TurnDirection: 0
   - Type: 1
     Obstacle:
-      Type: 6
-      SpawnPosition: 10
+      Type: 0
+      SpawnPosition: 19
     ShouldTurn: 1
     TurnDirection: 2
   - Type: 1
     Obstacle:
-      Type: 6
+      Type: 5
       SpawnPosition: 11
     ShouldTurn: 1
     TurnDirection: 1
@@ -53,23 +41,35 @@ MonoBehaviour:
     Obstacle:
       Type: 0
       SpawnPosition: 0
-    ShouldTurn: 0
-    TurnDirection: 0
+    ShouldTurn: 1
+    TurnDirection: 1
   - Type: 1
     Obstacle:
-      Type: 1
-      SpawnPosition: 15
+      Type: 0
+      SpawnPosition: 10
     ShouldTurn: 1
     TurnDirection: 2
   - Type: 1
     Obstacle:
-      Type: 8
+      Type: 2
       SpawnPosition: 15
-    ShouldTurn: 0
-    TurnDirection: 0
+    ShouldTurn: 1
+    TurnDirection: 2
   - Type: 2
     Obstacle:
       Type: 0
       SpawnPosition: 0
+    ShouldTurn: 0
+    TurnDirection: 0
+  - Type: 0
+    Obstacle:
+      Type: 0
+      SpawnPosition: 0
     ShouldTurn: 1
-    TurnDirection: 2
+    TurnDirection: 1
+  - Type: 2
+    Obstacle:
+      Type: 0
+      SpawnPosition: 0
+    ShouldTurn: 0
+    TurnDirection: 0

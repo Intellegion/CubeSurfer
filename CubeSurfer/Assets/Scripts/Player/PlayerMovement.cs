@@ -15,6 +15,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private GameObject initialCube;
 
+    [SerializeField]
+    private LevelProgress levelProgress;
+
+    public Transform splashContainer;
+
     public GameObject PlayerCube;
 
     public int Score;
@@ -28,19 +33,36 @@ public class PlayerMovement : MonoBehaviour
     public float ZClampMin;
     public float ZClampMax;
 
+    public int progress;
+
+    public Vector3 StartPosition;
+
     private Vector3 movementVector;
     private float xInput;
+    
 
     public List<GameObject> cubes = new List<GameObject>();
     public List<GameObject> splashes = new List<GameObject>();
+    public List<GameObject> pickups = new List<GameObject>();
+
+    private List<GameObject> removedCubes = new List<GameObject>();
+    private Touch touch;
 
     void Start()
     {
+        Initialize();
+        cubes.Add(initialCube);
+    }
+
+    void Initialize()
+    {
+        XClampMax = 2;
+        XClampMin = -2;
         currentDirection = Direction.Straight;
         CanControl = true;
         movementVector = new Vector2();
-
-        cubes.Add(initialCube);
+        progress = 0;
+        StartCoroutine(ClearSplashes());
     }
 
     // Update is called once per frame
@@ -50,7 +72,17 @@ public class PlayerMovement : MonoBehaviour
 
         if (CanControl)
         {
-            xInput = Input.GetAxisRaw("Horizontal") * Sensitivity * Time.deltaTime;
+            if (Input.touchCount > 0)
+            {
+                touch = Input.GetTouch(0);
+
+                if (touch.phase == TouchPhase.Moved)
+                {
+                    xInput = touch.deltaPosition.x * Sensitivity * Time.deltaTime;
+                }
+            }
+
+            //xInput = Input.GetAxisRaw("Horizontal") * Sensitivity * Time.deltaTime;
             movementVector = transform.position;
 
             if (currentDirection == Direction.Straight)
@@ -117,7 +149,14 @@ public class PlayerMovement : MonoBehaviour
             if (cubes.Contains(cube))
             {
                 cubes.Remove(cube);
-                Destroy(cube);
+                removedCubes.Add(cube);
+                StartCoroutine(DestroyCube(cube));
+            }
+
+            if (cubes.Count == 0)
+            {
+                StopMovement();
+                StopAllCoroutines();
             }
         }
         else
@@ -126,13 +165,84 @@ public class PlayerMovement : MonoBehaviour
             {
                 Destroy(cubes[cubes.Count - 1]);
                 cubes.RemoveAt(cubes.Count - 1);
+
+                if (cubes.Count == 0)
+                {
+                    StopMovement();
+                }
             }
         }
+    }
 
-        if (cubes.Count == 0)
+    private IEnumerator DestroyCube(GameObject cube)
+    {
+        yield return new WaitForSeconds(1);
+
+        Destroy(cube);
+    }
+
+    private IEnumerator ClearSplashes()
+    {
+        while (true)
         {
-            Sensitivity = 0;
-            Velocity = 0;
+            if (splashes.Count > 3)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Destroy(splashes[i]);
+                    splashes.RemoveAt(i);
+                }
+
+                yield return new WaitForSeconds(0.3f);
+            }
+
+            else
+            {
+                yield return new WaitForSeconds(1);
+            }
         }
+    }
+
+    public void StopMovement()
+    {
+        Velocity = Sensitivity = 0;
+        levelProgress.OnGameOverEvent.Invoke(progress >= 9 ? true : false);
+    }
+
+    public void Respawn()
+    {
+        transform.position = StartPosition;
+        transform.rotation = Quaternion.identity;
+
+        foreach (GameObject splash in splashes)
+        {
+            Destroy(splash);
+        }
+        splashes.Clear();
+
+        foreach (GameObject cube in cubes)
+        {
+            Destroy(cube);
+        }
+        cubes.Clear();
+
+        foreach (GameObject removed in removedCubes)
+        {
+            Destroy(removed);
+        }
+        removedCubes.Clear();
+
+        foreach (GameObject pickup in pickups)
+        {
+            pickup.SetActive(true);
+        }
+
+        IncrementCube();
+        initialCube = cubes[0];
+        Initialize();
+        initialCube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
+        Velocity = Constants.VELOCITY;
+        Sensitivity = Constants.SENSITIVITY;
     }
 }

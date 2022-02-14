@@ -18,27 +18,23 @@ public class CollisionDetection : MonoBehaviour
     {
         surfacePosition = new Vector3(0, 0.5f, 0);
         playerMovement = transform.parent.GetComponent<PlayerMovement>();
-        StartCoroutine(ClearSplashes());
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.tag.Equals("obstacle"))
         {
+            this.enabled = false;
             transform.parent = null;
             playerMovement.DecrementCube(gameObject);
-            foreach (GameObject child in playerMovement.cubes)
-            {
-                child.GetComponent<Rigidbody>().constraints = ~RigidbodyConstraints.FreezePositionY;
-            }
         }
-
+        else if (collision.collider.tag.Equals("player"))
+        {
+            gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll | ~RigidbodyConstraints.FreezePositionY;
+        }
         else if (collision.collider.tag.Equals("path"))
         {
-            foreach (GameObject child in playerMovement.cubes)
-            {
-                child.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            }
+            gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll | ~RigidbodyConstraints.FreezePositionY;
 
             if (playerMovement.currentDirection == Direction.Straight)
             {
@@ -89,6 +85,7 @@ public class CollisionDetection : MonoBehaviour
         if (collision.collider.gameObject.layer == 6)
         {
             splash = Instantiate(splashObject, (transform.position - surfacePosition) + Vector3.up * 0.01f, Quaternion.identity);
+            splash.transform.SetParent(playerMovement.splashContainer);
             playerMovement.splashes.Add(splash);
         }
     }
@@ -98,6 +95,37 @@ public class CollisionDetection : MonoBehaviour
         if(collision.collider.tag.Equals("slime"))
         {
             StopAllCoroutines();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag.Equals("pickup"))
+        {
+            playerMovement.pickups.Add(other.gameObject);
+            other.gameObject.SetActive(false);
+            playerMovement.IncrementCube();
+        }
+
+        else if (other.tag.Equals("coin"))
+        {
+            playerMovement.pickups.Add(other.gameObject);
+            other.gameObject.SetActive(false);
+            playerMovement.Score++;
+        }
+
+        else if (other.tag.Equals("waypoint"))
+        {
+            playerMovement.progress++;
+        }
+    }
+
+    private IEnumerator DecrementCubes()
+    {
+        while(true)
+        {
+            playerMovement.DecrementCube();
+            yield return new WaitForSeconds(0.3f);
         }
     }
 
@@ -114,54 +142,6 @@ public class CollisionDetection : MonoBehaviour
         else
         {
             playerMovement.currentDirection = Direction.Left;
-        }
-
-        
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag.Equals("pickup"))
-        {
-            other.gameObject.SetActive(false);
-            playerMovement.IncrementCube();
-        }
-
-        else if (other.tag.Equals("coin"))
-        {
-            other.gameObject.SetActive(false);
-            playerMovement.Score++;
-        }
-    }
-
-    private IEnumerator DecrementCubes()
-    {
-        while(true)
-        {
-            playerMovement.DecrementCube();
-            yield return new WaitForSeconds(0.1f);
-        }
-    }
-
-    private IEnumerator ClearSplashes()
-    {
-        while (true)
-        {
-            if (playerMovement.splashes.Count >= 3)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    Destroy(playerMovement.splashes[i]);
-                    playerMovement.splashes.RemoveAt(i);
-                }
-
-                yield return new WaitForSeconds(0.3f);
-            }
-
-            else
-            {
-                yield return new WaitForSeconds(1);
-            }
         }
     }
 }
