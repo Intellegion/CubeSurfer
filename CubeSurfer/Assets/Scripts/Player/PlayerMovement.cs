@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private float Velocity;
-    private float Sensitivity;
-
+ 
     [SerializeField]
     private GameObject initialCube;
 
@@ -17,15 +16,28 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private GameObject Head;
 
-    public Transform splashContainer;
+    public float Velocity;
+    public float Sensitivity;
+
+    public AudioManager AudioManagerComponent;
+    public AudioClip SlimeEffect;
+    public AudioClip ObstacleEffect;
+    public AudioClip VictoryEffect;
+    public AudioClip DefeatEffect;
+    public AudioClip CoinEffect;
+    public AudioClip StackEffect;
+
+    public Transform SplashContainer;
 
     public GameObject PlayerCube;
 
     public Slider ProgressSlider;
 
+    public TextMeshProUGUI ScoreText;
+
     public int Score;
 
-    public Direction currentDirection;
+    public Direction CurrentDirection;
 
     public bool CanControl;
 
@@ -52,20 +64,25 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         Initialize();
-        cubes.Add(initialCube);
     }
 
     void Initialize()
     {
         XClampMax = 2;
         XClampMin = -2;
-        currentDirection = Direction.Straight;
+
+        ScoreText.text = "0";
+
+        CurrentDirection = Direction.Straight;
         CanControl = true;
         movementVector = new Vector2();
+
         progress = 0;
         ProgressSlider.value = 0;
+
         Velocity = Constants.VELOCITY;
         Sensitivity = Constants.SENSITIVITY;
+
         StartCoroutine(ClearSplashes());
     }
 
@@ -86,10 +103,10 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            xInput = Input.GetAxisRaw("Horizontal") * Sensitivity * Time.deltaTime;
+            xInput = Input.GetAxisRaw("Horizontal") * Sensitivity * 14 * Time.deltaTime;
             movementVector = transform.position;
 
-            if (currentDirection == Direction.Straight)
+            if (CurrentDirection == Direction.Straight)
             {
                 if (transform.position.x + xInput > XClampMax)
                 {
@@ -104,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
                     movementVector.x += xInput;
                 }
             }
-            else if (currentDirection == Direction.Left)
+            else if (CurrentDirection == Direction.Left)
             {
                 if (transform.position.z + xInput > ZClampMax)
                 {
@@ -210,8 +227,19 @@ public class PlayerMovement : MonoBehaviour
 
     public void StopMovement()
     {
+        bool victory = progress >= Constants.MAX_CHUNKS;
         Velocity = Sensitivity = 0;
-        levelProgress.OnGameOverEvent.Invoke(progress >= Constants.MAX_CHUNKS ? true : false);
+
+        if (victory)
+        {
+            AudioManagerComponent.PlayClip(VictoryEffect);
+        }
+        else
+        {
+            AudioManagerComponent.PlayClip(DefeatEffect);
+        }
+
+        levelProgress.OnGameOverEvent.Invoke(victory);
     }
 
     public void Respawn()
@@ -255,5 +283,18 @@ public class PlayerMovement : MonoBehaviour
     {
         progress++;
         ProgressSlider.value = (float) progress / Constants.MAX_CHUNKS;
+    }
+
+    public void CubePickUp()
+    {
+        AudioManagerComponent.PlayClip(StackEffect);
+        IncrementCube();
+    }
+
+    public void CoinPickUp()
+    {
+        AudioManagerComponent.PlayClip(CoinEffect);
+        Score++;
+        ScoreText.text = Score.ToString();
     }
 }

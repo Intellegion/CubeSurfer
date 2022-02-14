@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4581075001238777557
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4581075001238777559}
+  - component: {fileID: 4581075001238777556}
+  m_Layer: 0
+  m_Name: LevelGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4581075001238777559
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4581075001238777557}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4581075001238777556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4581075001238777557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fd43e78d77e71a4b90649b9e61c948d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathObject: {fileID: 1136439140765069531, guid: 79f5bc84590d5ee4fbc464a14a77f76d,
+    type: 3}
+  obstacleObjects:
+  - {fileID: 6172702298115700642, guid: b0005b6b3b9f75d4a9d2959fa5346b6c, type: 3}
+  - {fileID: 6172702298115700642, guid: f19e6f260c70d2348a4e5568591cd004, type: 3}
+  - {fileID: 6172702298115700642, guid: 49837b16fcb6f764f929f932868b71f8, type: 3}
+  - {fileID: 6172702298115700642, guid: 1b3f282ef604e5f41bdbc5d3436f1c34, type: 3}
+  - {fileID: 6172702298115700642, guid: d2a65049f58a56e499368dd76125297f, type: 3}
+  - {fileID: 6172702298115700642, guid: c6c531c76bc8b33428ff70fe0a26de8b, type: 3}
+  - {fileID: 6172702298115700642, guid: 2ed3485b281d1af44b8f44f323a056ec, type: 3}
+  - {fileID: 6172702298115700642, guid: 12b822ad7908bb846bed95ee178833ee, type: 3}
+  - {fileID: 6172702298115700642, guid: 5642775c91aa9b7499d04bb00101c7c5, type: 3}
+  - {fileID: 6172702298115700642, guid: 512babc47d4ff2f46815f727e1cd891e, type: 3}
+  slimeObject: {fileID: 1001361264079351040, guid: 4b06bbe9345248444ad385cd77961609,
+    type: 3}
+  archObject: {fileID: 3809596772390072527, guid: 7fd8b403d04777749ad0b5dcdc9b7ad8,
+    type: 3}
+  endObject: {fileID: 1511460494943233086, guid: 1c0d313bab396eb45b35db259dbc0b40,
+    type: 3}
+  pickUpObject: {fileID: 320301804605898166, guid: b0786713bbd193c419ee2bade2cfa44f,
+    type: 3}
+  coinObject: {fileID: 2160237830457328470, guid: 891025b4ede158749a18a2a08daf3250,
+    type: 3}
+  maxChunks: 15
+  Player: {fileID: 0}
+  currentDirection: 0
+  Level: 0

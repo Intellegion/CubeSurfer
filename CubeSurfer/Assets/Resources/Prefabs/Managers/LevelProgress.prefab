@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6312187740521787990
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6312187740521787988}
+  - component: {fileID: 6312187740521787991}
+  m_Layer: 0
+  m_Name: LevelProgress
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6312187740521787988
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6312187740521787990}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 261.5, y: 428.0631, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6312187740521787991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6312187740521787990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 181a8d85b7641a74ea057a30d4158e5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnGameOverEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  LevelGeneratorComponent: {fileID: 0}
+  UIManagerComponent: {fileID: 0}
+  AudioManagerComponent: {fileID: 0}
+  MainCamera: {fileID: 0}
+  SkyBoxes:
+  - {fileID: 2100000, guid: 656058fe318eb48558d21d66d1a79a2b, type: 2}
+  - {fileID: 2100000, guid: 7416536dbe0334cfd888dd1beb75a9fb, type: 2}
+  - {fileID: 2100000, guid: 9af23ba5fa5364ff598888460e0e2759, type: 2}
+  LevelMusic:
+  - {fileID: 8300000, guid: 8b894429411c39c448d9f94154a635a5, type: 3}
+  - {fileID: 8300000, guid: 17dce37c0cf9e23499cb40a88ff4e9d5, type: 3}
+  - {fileID: 8300000, guid: 817ab7fa349c9fd4699049d507024f16, type: 3}
+  MenuMusic: {fileID: 8300000, guid: bcb36bcf91c49954489537dd9e7f5a4f, type: 3}
+  VictoryMusic: {fileID: 8300000, guid: e753e608a36e1034ebacaa30eb6a55dc, type: 3}

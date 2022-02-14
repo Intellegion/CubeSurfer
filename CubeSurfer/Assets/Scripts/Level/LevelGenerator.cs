@@ -286,7 +286,7 @@ public class LevelGenerator : MonoBehaviour
                     chunk.Obstacle = new ObstacleWall();
 
                     chunk.Obstacle.Type = Random.Range(0, obstacleObjects.Length);
-                    chunk.Obstacle.SpawnPosition = Random.Range(10, 20);           
+                    chunk.Obstacle.SpawnPosition = Random.Range(12, 18);           
 
                     chunk.SlimePools = null;
                     break;
@@ -300,7 +300,7 @@ public class LevelGenerator : MonoBehaviour
                     for (int i = 0; i < chunk.SlimePools.Length; i++)
                     {
                         chunk.SlimePools[i] = new SlimePool();
-                        chunk.SlimePools[i].RelativeSpawnPositionX = Random.Range(-2, 3);
+                        chunk.SlimePools[i].RelativeSpawnPositionX = Random.Range(-1, 2);
                         chunk.SlimePools[i].RelativeSpawnPositionZ = step * i;
                     }
 

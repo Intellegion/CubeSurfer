@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     public Button NextButton;
 
     public TextMeshProUGUI TotalScoreText;
+    public TextMeshProUGUI ResultText;
 
     public Button[] LevelButtons;
 

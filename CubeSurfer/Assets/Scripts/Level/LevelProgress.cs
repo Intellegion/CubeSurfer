@@ -7,13 +7,22 @@ public class LevelProgress : MonoBehaviour
     public UnityEvent<bool> OnGameOverEvent = new UnityEvent<bool>();
     public LevelGenerator LevelGeneratorComponent;
     public UIManager UIManagerComponent;
+    public AudioManager AudioManagerComponent;
+    public GameObject MainCamera;
 
     private PlayerMovement playerMovement;
 
     private int curentTotal;
+
+    public Material[] SkyBoxes;
+    public AudioClip[] LevelMusic;
+
+    public AudioClip MenuMusic;
+    public AudioClip VictoryMusic;
     // Start is called before the first frame update
     void Start()
     {
+        AudioManagerComponent.PlayMusic(MenuMusic);
         curentTotal = PlayerPrefs.GetInt("TotalScore");
         playerMovement = LevelGeneratorComponent.Player.GetComponent<PlayerMovement>();
         OnGameOverEvent.AddListener(GameOver);
@@ -32,12 +41,14 @@ public class LevelProgress : MonoBehaviour
 
         if (didWin)
         {
+            UIManagerComponent.ResultText.text = "VICTORY";
             PlayerPrefs.SetInt("TotalScore", curentTotal + playerMovement.Score);
 
             if (PlayerPrefs.GetInt("Progress") < currentLevel)
             {
                 if (currentLevel > UIManagerComponent.LevelButtons.Length - 1)
                 {
+                    AudioManagerComponent.PlayMusic(VictoryMusic);
                     return;
                 }
 
@@ -49,15 +60,22 @@ public class LevelProgress : MonoBehaviour
 
             UIManagerComponent.NextButton.gameObject.SetActive(true);
         }
+        else
+        {
+            UIManagerComponent.ResultText.text = "DEFEAT";
+        }
     }
 
     public void StartGame()
     {
         Constants.CONTINUE = false;
+        MainCamera.GetComponent<Skybox>().material = SkyBoxes[Constants.LEVEL - 1];
+        AudioManagerComponent.PlayMusic(LevelMusic[Constants.LEVEL - 1]);
         UIManagerComponent.NextButton.gameObject.SetActive(false);
         UIManagerComponent.HidePanel(UIManagerComponent.StartPanel);
         UIManagerComponent.ShowPanel(UIManagerComponent.HUDPanel);
         playerMovement.enabled = true;
+        playerMovement.Respawn();
     }
 
     public void NextLevel(int currentLevel = 0)

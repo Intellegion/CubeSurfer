@@ -24,6 +24,7 @@ public class CollisionDetection : MonoBehaviour
     {
         if (collision.collider.tag.Equals("obstacle"))
         {
+            playerMovement.AudioManagerComponent.PlayClip(playerMovement.ObstacleEffect);
             this.enabled = false;
             transform.parent = null;
             playerMovement.DecrementCube(gameObject);
@@ -44,7 +45,7 @@ public class CollisionDetection : MonoBehaviour
         {
             gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll | ~RigidbodyConstraints.FreezePositionY;
 
-            if (playerMovement.currentDirection == Direction.Straight)
+            if (playerMovement.CurrentDirection == Direction.Straight)
             {
                 playerMovement.XClampMin = collision.collider.transform.position.x - collision.collider.transform.localScale.x / 2 + 0.5f;
                 playerMovement.XClampMax = collision.collider.transform.position.x + collision.collider.transform.localScale.x / 2 - 0.5f;
@@ -84,6 +85,7 @@ public class CollisionDetection : MonoBehaviour
 
         else if (collision.collider.tag.Equals("slime"))
         {
+            playerMovement.AudioManagerComponent.PlayClip(playerMovement.SlimeEffect);
             StartCoroutine(DecrementCubes());
         }
     }
@@ -93,7 +95,7 @@ public class CollisionDetection : MonoBehaviour
         if (collision.collider.gameObject.layer == 6)
         {
             splash = Instantiate(splashObject, (transform.position - surfacePosition) + Vector3.up * 0.01f, Quaternion.identity);
-            splash.transform.SetParent(playerMovement.splashContainer);
+            splash.transform.SetParent(playerMovement.SplashContainer);
             playerMovement.splashes.Add(splash);
         }
     }
@@ -102,6 +104,7 @@ public class CollisionDetection : MonoBehaviour
     {
         if(collision.collider.tag.Equals("slime"))
         {
+            playerMovement.AudioManagerComponent.StopSoundFX();
             StopAllCoroutines();
         }
     }
@@ -112,14 +115,14 @@ public class CollisionDetection : MonoBehaviour
         {
             playerMovement.pickups.Add(other.gameObject);
             other.gameObject.SetActive(false);
-            playerMovement.IncrementCube();
+            playerMovement.CubePickUp();
         }
 
         else if (other.tag.Equals("coin"))
         {
             playerMovement.pickups.Add(other.gameObject);
             other.gameObject.SetActive(false);
-            playerMovement.Score++;
+            playerMovement.CoinPickUp();
         }
 
         else if (other.tag.Equals("waypoint"))
@@ -133,7 +136,7 @@ public class CollisionDetection : MonoBehaviour
         while(true)
         {
             playerMovement.DecrementCube();
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.15f);
         }
     }
 
@@ -141,15 +144,15 @@ public class CollisionDetection : MonoBehaviour
     {
         if (finalRotation == 0 || finalRotation == 360)
         {
-            playerMovement.currentDirection = Direction.Straight;
+            playerMovement.CurrentDirection = Direction.Straight;
         }
         else if (finalRotation == 90)
         {
-            playerMovement.currentDirection = Direction.Right;
+            playerMovement.CurrentDirection = Direction.Right;
         }
         else
         {
-            playerMovement.currentDirection = Direction.Left;
+            playerMovement.CurrentDirection = Direction.Left;
         }
     }
 }

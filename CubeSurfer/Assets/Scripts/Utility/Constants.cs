@@ -9,7 +9,7 @@ public class Constants : MonoBehaviour
     public static int MAX_CHUNKS = 15;
 
     public static int VELOCITY = 17;
-    public static int SENSITIVITY = 7;
+    public static float SENSITIVITY = 0.5f;
 
     public static bool CONTINUE = false;
 
