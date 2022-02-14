@@ -28,8 +28,6 @@ public class PlayerMovement : MonoBehaviour
     public float ZClampMin;
     public float ZClampMax;
 
-    private int numberOfCubes;
-
     private Vector3 movementVector;
     private float xInput;
 
@@ -40,7 +38,6 @@ public class PlayerMovement : MonoBehaviour
     {
         currentDirection = Direction.Straight;
         CanControl = true;
-        numberOfCubes = 1;
         movementVector = new Vector2();
 
         cubes.Add(initialCube);
@@ -109,9 +106,8 @@ public class PlayerMovement : MonoBehaviour
     public void IncrementCube()
     {
         GameObject go = Instantiate(PlayerCube, transform, false);
-        go.transform.localPosition = Vector3.up * numberOfCubes;
+        go.transform.localPosition = Vector3.up * cubes.Count;
         cubes.Add(go);
-        numberOfCubes++;
     }
 
     public void DecrementCube(GameObject cube = null)
@@ -128,13 +124,14 @@ public class PlayerMovement : MonoBehaviour
         {
             if (cubes.Count > 0)
             {
-                cubes[cubes.Count - 1].SetActive(false);
+                Destroy(cubes[cubes.Count - 1]);
                 cubes.RemoveAt(cubes.Count - 1);
             }
         }
 
         if (cubes.Count == 0)
         {
+            Sensitivity = 0;
             Velocity = 0;
         }
     }

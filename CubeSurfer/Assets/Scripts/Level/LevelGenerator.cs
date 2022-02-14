@@ -21,6 +21,12 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     private GameObject endObject;
 
+    [SerializeField]
+    private GameObject pickUpObject;
+
+    [SerializeField]
+    private GameObject coinObject;
+
     private LevelData[] levelData;
 
     private Chunk[] chunks;
@@ -77,17 +83,17 @@ public class LevelGenerator : MonoBehaviour
 
                             if (currentDirection == Direction.Straight)
                             {
-                                obstacleWall.transform.position = new Vector3(currentSpawnX - 2, 1.5f, currentSpawnZ - 15 + obstacle.SpawnPosition);
+                                obstacleWall.transform.position = new Vector3(currentSpawnX - 2, 1.5f, currentSpawnZ - 10 + obstacle.SpawnPosition);
                             }
                             else if (currentDirection == Direction.Left)
                             {
                                 obstacleWall.transform.rotation = Quaternion.Euler(0, -90, 0);
-                                obstacleWall.transform.position = new Vector3(currentSpawnX + 15 - obstacle.SpawnPosition, 1.5f, currentSpawnZ - 2);
+                                obstacleWall.transform.position = new Vector3(currentSpawnX + 10 - obstacle.SpawnPosition, 1.5f, currentSpawnZ - 2);
                             }
                             else
                             {
                                 obstacleWall.transform.rotation = Quaternion.Euler(0, 90, 0);
-                                obstacleWall.transform.position = new Vector3(currentSpawnX - 15 + obstacle.SpawnPosition, 1.5f, currentSpawnZ + 2);
+                                obstacleWall.transform.position = new Vector3(currentSpawnX - 10 + obstacle.SpawnPosition, 1.5f, currentSpawnZ + 2);
                             }       
                         }
 
@@ -102,24 +108,55 @@ public class LevelGenerator : MonoBehaviour
 
                             if (currentDirection == Direction.Straight)
                             {
-                                slime.transform.position = new Vector3(slimePool.RelativeSpawnPositionX + currentSpawnX, 1.01f, currentSpawnZ - 10 + slimePool.RelativeSpawnPositionZ);
+                                slime.transform.position = new Vector3(slimePool.RelativeSpawnPositionX + currentSpawnX, 1.01f, currentSpawnZ - 5 + slimePool.RelativeSpawnPositionZ);
                             }
                             else if (currentDirection == Direction.Left)
                             {
                                 slime.transform.rotation = Quaternion.Euler(0, 90, 0);
-                                slime.transform.position = new Vector3(currentSpawnX + 10 - slimePool.RelativeSpawnPositionZ, 1.01f, slimePool.RelativeSpawnPositionX + currentSpawnZ);
+                                slime.transform.position = new Vector3(currentSpawnX + 5 - slimePool.RelativeSpawnPositionZ, 1.01f, slimePool.RelativeSpawnPositionX + currentSpawnZ);
                             }
                             else
                             {
                                 slime.transform.rotation = Quaternion.Euler(0, 90, 0);
-                                slime.transform.position = new Vector3(currentSpawnX - 10 + slimePool.RelativeSpawnPositionZ, 1.01f, slimePool.RelativeSpawnPositionX + currentSpawnZ);
+                                slime.transform.position = new Vector3(currentSpawnX - 5 + slimePool.RelativeSpawnPositionZ, 1.01f, slimePool.RelativeSpawnPositionX + currentSpawnZ);
                             }
+
+                            
                         }
 
                         break;
                     }
                 default:
                     {
+                        int random = Random.Range(1, 5);
+                        int step = 25 / random;
+                        GameObject obj;
+                        for (int j = 0; j < random; j++)
+                        {
+                            if (j % 2 == 0)
+                            {
+                                obj = pickUpObject;
+                            }
+                            else
+                            {
+                                obj = coinObject;
+                            }
+
+                            GameObject pickup = Instantiate(obj, transform, false);
+                            if (currentDirection == Direction.Straight)
+                            {
+                                pickup.transform.position = new Vector3(Random.Range(-2, 3) + currentSpawnX, 1.5f , currentSpawnZ - 10 + step * j);
+                            }
+                            else if (currentDirection == Direction.Left)
+                            {
+                                pickup.transform.position = new Vector3(currentSpawnX + 10 - step * j, 1.5f, Random.Range(-2, 3) + currentSpawnZ);
+                            }
+                            else
+                            {
+                                pickup.transform.position = new Vector3(currentSpawnX - 10 + step * j, 1.5f , Random.Range(-2, 3) + currentSpawnZ);
+                            }
+
+                        }
                         break;
                     }
             }
@@ -223,15 +260,6 @@ public class LevelGenerator : MonoBehaviour
         SaveLevel(levelName);     
     }
 
-    private void InstantiateColumn(GameObject block, int columnHeight, int spawnX, int spawnZ)
-    {
-        for (int i = 0; i < columnHeight; i++)
-        {
-            GameObject columnObject = Instantiate(block, transform, false);
-            columnObject.transform.position = new Vector3(spawnX, i + 1.5f, spawnZ);
-        }
-    }
-
     private void SaveLevel(string levelName)
     {
         levelData[Level].Chunks = chunks;
@@ -245,14 +273,14 @@ public class LevelGenerator : MonoBehaviour
         Chunk chunk = new Chunk();
         int step;
 
-        chunk.Type = (ChunkType)Random.Range(1, 3);
+        chunk.Type = (ChunkType)Random.Range(0, 3);
 
         switch(chunk.Type)
         {
             case ChunkType.Obstacle:
                 {
                     chunk = Chunk.GetObstacleChunk(chunk);
-                    chunk.Obstacles = new ObstacleWall[Random.Range(2, 5)];
+                    chunk.Obstacles = new ObstacleWall[Random.Range(1, 3)];
                     step = 25 / chunk.Obstacles.Length;
 
                     for (int i = 0; i < chunk.Obstacles.Length; i++)
@@ -268,8 +296,7 @@ public class LevelGenerator : MonoBehaviour
             case ChunkType.Slime:
                 {
                     chunk = Chunk.GetSlimeChunk(chunk);
-                    chunk.Obstacles = null;
-                    chunk.SlimePools = new SlimePool[Random.Range(1, 4)];
+                    chunk.SlimePools = new SlimePool[Random.Range(1, 3)];
                     step = 25 / chunk.SlimePools.Length;
 
                     for (int i = 0; i < chunk.SlimePools.Length; i++)
@@ -279,6 +306,14 @@ public class LevelGenerator : MonoBehaviour
                         chunk.SlimePools[i].RelativeSpawnPositionZ = step * i;
                     }
 
+                    chunk.Obstacles = null;
+                    break;
+                }
+            default:
+                {
+                    chunk = Chunk.GetBasicChunk(chunk);
+                    chunk.Obstacles = null;
+                    chunk.SlimePools = null;
                     break;
                 }
         }

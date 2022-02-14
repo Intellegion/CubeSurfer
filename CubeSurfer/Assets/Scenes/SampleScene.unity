@@ -605,6 +605,10 @@ MonoBehaviour:
     type: 3}
   endObject: {fileID: 1511460494943233086, guid: 1c0d313bab396eb45b35db259dbc0b40,
     type: 3}
+  pickUpObject: {fileID: 320301804605898166, guid: b0786713bbd193c419ee2bade2cfa44f,
+    type: 3}
+  coinObject: {fileID: 2160237830457328470, guid: 891025b4ede158749a18a2a08daf3250,
+    type: 3}
   currentDirection: 0
   Level: 0
 --- !u!4 &778419738
@@ -761,7 +765,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.56210524, y: 1}
+    m_SensorSize: {x: 0.5623656, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

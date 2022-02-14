@@ -147,9 +147,9 @@ public class CollisionDetection : MonoBehaviour
     {
         while (true)
         {
-            if (playerMovement.splashes.Count >= 5)
+            if (playerMovement.splashes.Count >= 3)
             {
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     Destroy(playerMovement.splashes[i]);
                     playerMovement.splashes.RemoveAt(i);
