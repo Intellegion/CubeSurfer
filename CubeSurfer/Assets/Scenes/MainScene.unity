@@ -1039,9 +1039,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2388935701927459150, guid: 112596892518e1f4693f1d12fbce4108,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2388935701927459150, guid: 112596892518e1f4693f1d12fbce4108,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1106692237}
+    - target: {fileID: 2388935701927459150, guid: 112596892518e1f4693f1d12fbce4108,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2388935702388133392, guid: 112596892518e1f4693f1d12fbce4108,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2388935702388133392, guid: 112596892518e1f4693f1d12fbce4108,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1308,6 +1323,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2456759599886250697, guid: 8f15916072bc76f409c5c0825a89aa8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2871986168104196816, guid: 8f15916072bc76f409c5c0825a89aa8e,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -1372,6 +1392,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3717819745648909321, guid: 8f15916072bc76f409c5c0825a89aa8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5245186688646269508, guid: 8f15916072bc76f409c5c0825a89aa8e,
         type: 3}

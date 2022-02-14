@@ -6,9 +6,7 @@ using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
- 
-    [SerializeField]
-    private GameObject initialCube;
+    public GameObject initialCube;
 
     [SerializeField]
     private LevelProgress levelProgress;
@@ -63,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        cubes.Add(initialCube);
         Initialize();
     }
 
@@ -177,6 +176,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (cubes.Count == 0)
             {
+                initialCube = null;
                 StopMovement();
                 StopAllCoroutines();
             }
@@ -246,7 +246,7 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.position = StartPosition;
         transform.rotation = Quaternion.identity;
-
+        Initialize();
         foreach (GameObject splash in splashes)
         {
             Destroy(splash);
@@ -270,13 +270,12 @@ public class PlayerMovement : MonoBehaviour
             pickup.SetActive(true);
         }
 
-        IncrementCube();
-        initialCube = cubes[0];
-        Initialize();
-        initialCube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-
-        Velocity = Constants.VELOCITY;
-        Sensitivity = Constants.SENSITIVITY;
+        if (initialCube == null)
+        {
+            IncrementCube();
+            initialCube = cubes[0];
+            initialCube.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        }
     }
 
     public void IncreaseProgress()

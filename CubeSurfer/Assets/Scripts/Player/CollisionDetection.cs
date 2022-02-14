@@ -56,7 +56,6 @@ public class CollisionDetection : MonoBehaviour
                 playerMovement.ZClampMin = collision.collider.transform.position.z - collision.collider.transform.localScale.x / 2 + 0.5f;
                 playerMovement.ZClampMax = collision.collider.transform.position.z + collision.collider.transform.localScale.x / 2 - 0.5f;
             }
-
         }
 
         else if (collision.collider.tag.Equals("turning"))

@@ -68,7 +68,6 @@ public class LevelProgress : MonoBehaviour
 
     public void StartGame()
     {
-        Constants.CONTINUE = false;
         MainCamera.GetComponent<Skybox>().material = SkyBoxes[Constants.LEVEL - 1];
         AudioManagerComponent.PlayMusic(LevelMusic[Constants.LEVEL - 1]);
         UIManagerComponent.NextButton.gameObject.SetActive(false);
@@ -76,6 +75,7 @@ public class LevelProgress : MonoBehaviour
         UIManagerComponent.ShowPanel(UIManagerComponent.HUDPanel);
         playerMovement.enabled = true;
         playerMovement.Respawn();
+        Constants.CONTINUE = false;
     }
 
     public void NextLevel(int currentLevel = 0)
