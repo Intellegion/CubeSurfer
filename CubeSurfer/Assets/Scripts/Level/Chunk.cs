@@ -20,8 +20,7 @@ public class Chunk
 {
     public ChunkType Type;
 
-    [Range(0, 5)]
-    public ObstacleWall[] Obstacles;
+    public ObstacleWall Obstacle;
 
     [Range(0, 3)]
     public SlimePool[] SlimePools;

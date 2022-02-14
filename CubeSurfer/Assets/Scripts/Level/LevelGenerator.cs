@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using Cinemachine;
+using System.Collections.Generic;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -27,6 +26,9 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     private GameObject coinObject;
 
+    [SerializeField]
+    private CinemachineVirtualCamera vCam;
+
     private LevelData[] levelData;
 
     private Chunk[] chunks;
@@ -41,11 +43,15 @@ public class LevelGenerator : MonoBehaviour
     private GameObject path;
     private GameObject arch;
 
+    public GameObject Player;
+
     public Direction currentDirection;
     public int Level = 0;
 
     private void Start()
     {
+        Level = Constants.LEVEL;
+
         chunks = new Chunk[10];
 
         levelData = new LevelData[3];
@@ -77,26 +83,23 @@ public class LevelGenerator : MonoBehaviour
             {
                 case ChunkType.Obstacle:
                     {
-                        foreach (ObstacleWall obstacle in chunks[i].Obstacles)
+                        ObstacleWall obstacle = chunks[i].Obstacle;
+                        obstacleWall = Instantiate(obstacleObjects[obstacle.Type], transform, false);
+
+                        if (currentDirection == Direction.Straight)
                         {
-                            obstacleWall = Instantiate(obstacleObjects[obstacle.Type], transform, false);
-
-                            if (currentDirection == Direction.Straight)
-                            {
-                                obstacleWall.transform.position = new Vector3(currentSpawnX - 2, 1.5f, currentSpawnZ - 10 + obstacle.SpawnPosition);
-                            }
-                            else if (currentDirection == Direction.Left)
-                            {
-                                obstacleWall.transform.rotation = Quaternion.Euler(0, -90, 0);
-                                obstacleWall.transform.position = new Vector3(currentSpawnX + 10 - obstacle.SpawnPosition, 1.5f, currentSpawnZ - 2);
-                            }
-                            else
-                            {
-                                obstacleWall.transform.rotation = Quaternion.Euler(0, 90, 0);
-                                obstacleWall.transform.position = new Vector3(currentSpawnX - 10 + obstacle.SpawnPosition, 1.5f, currentSpawnZ + 2);
-                            }       
+                            obstacleWall.transform.position = new Vector3(currentSpawnX - 2, 1.5f, currentSpawnZ - 15 + obstacle.SpawnPosition);
                         }
-
+                        else if (currentDirection == Direction.Left)
+                        {
+                            obstacleWall.transform.rotation = Quaternion.Euler(0, -90, 0);
+                            obstacleWall.transform.position = new Vector3(currentSpawnX + 15 - obstacle.SpawnPosition, 1.5f, currentSpawnZ - 2);
+                        }
+                        else
+                        {
+                            obstacleWall.transform.rotation = Quaternion.Euler(0, 90, 0);
+                            obstacleWall.transform.position = new Vector3(currentSpawnX - 15 + obstacle.SpawnPosition, 1.5f, currentSpawnZ + 2);
+                        }       
                         break;
                     }
 
@@ -119,9 +122,7 @@ public class LevelGenerator : MonoBehaviour
                             {
                                 slime.transform.rotation = Quaternion.Euler(0, 90, 0);
                                 slime.transform.position = new Vector3(currentSpawnX - 5 + slimePool.RelativeSpawnPositionZ, 1.01f, slimePool.RelativeSpawnPositionX + currentSpawnZ);
-                            }
-
-                            
+                            }  
                         }
 
                         break;
@@ -155,7 +156,6 @@ public class LevelGenerator : MonoBehaviour
                             {
                                 pickup.transform.position = new Vector3(currentSpawnX - 10 + step * j, 1.5f , Random.Range(-2, 3) + currentSpawnZ);
                             }
-
                         }
                         break;
                     }
@@ -280,15 +280,10 @@ public class LevelGenerator : MonoBehaviour
             case ChunkType.Obstacle:
                 {
                     chunk = Chunk.GetObstacleChunk(chunk);
-                    chunk.Obstacles = new ObstacleWall[Random.Range(1, 3)];
-                    step = 25 / chunk.Obstacles.Length;
+                    chunk.Obstacle = new ObstacleWall();
 
-                    for (int i = 0; i < chunk.Obstacles.Length; i++)
-                    {
-                        chunk.Obstacles[i] = new ObstacleWall();
-                        chunk.Obstacles[i].Type = Random.Range(0, 1);
-                        chunk.Obstacles[i].SpawnPosition = step * i;
-                    }
+                    chunk.Obstacle.Type = Random.Range(0, obstacleObjects.Length);
+                    chunk.Obstacle.SpawnPosition = Random.Range(10, 20);           
 
                     chunk.SlimePools = null;
                     break;
@@ -306,13 +301,13 @@ public class LevelGenerator : MonoBehaviour
                         chunk.SlimePools[i].RelativeSpawnPositionZ = step * i;
                     }
 
-                    chunk.Obstacles = null;
+                    chunk.Obstacle = null;
                     break;
                 }
             default:
                 {
                     chunk = Chunk.GetBasicChunk(chunk);
-                    chunk.Obstacles = null;
+                    chunk.Obstacle = null;
                     chunk.SlimePools = null;
                     break;
                 }
