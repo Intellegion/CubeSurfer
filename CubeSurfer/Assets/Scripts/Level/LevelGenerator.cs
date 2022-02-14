@@ -263,9 +263,12 @@ public class LevelGenerator : MonoBehaviour
     private void SaveLevel(string levelName)
     {
         levelData[Level].Chunks = chunks;
+
+#if UNITY_EDITOR
         EditorUtility.SetDirty(levelData[Level]);
         AssetDatabase.CreateAsset(levelData[Level], "Assets/Resources/Levels/" + levelName + ".asset");
         AssetDatabase.SaveAssets();
+#endif
     }
 
     private Chunk GenerateChunk()

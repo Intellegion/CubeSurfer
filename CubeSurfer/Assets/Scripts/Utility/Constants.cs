@@ -7,7 +7,7 @@ public class Constants : MonoBehaviour
     public static int LEVEL;
 
     public static int VELOCITY = 17;
-    public static int SENSITIVITY = 7;
+    public static int SENSITIVITY = 3;
 
     public static bool CONTINUE = false;
 
