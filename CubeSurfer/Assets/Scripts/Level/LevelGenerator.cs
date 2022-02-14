@@ -10,7 +10,10 @@ public class LevelGenerator : MonoBehaviour
     private GameObject pathObject;
 
     [SerializeField]
-    private GameObject obstacleObject;
+    private GameObject[] obstacleObjects;
+
+    [SerializeField]
+    private GameObject slimeObject;
 
     [SerializeField]
     private GameObject archObject;
@@ -27,7 +30,8 @@ public class LevelGenerator : MonoBehaviour
 
     private float currentSpawnZ;
 
-    private GameObject obstacle;
+    private GameObject obstacleWall;
+    private GameObject slime;
     private GameObject path;
     private GameObject arch;
 
@@ -52,7 +56,6 @@ public class LevelGenerator : MonoBehaviour
         levelData[Level] = ScriptableObject.CreateInstance<LevelData>();
         chunks[0] = Chunk.GetBasicChunk(new Chunk());
 
-
         path = Instantiate(pathObject, transform, false);
         path.transform.position = new Vector3(currentSpawnX, 0, currentSpawnZ);
         currentSpawnZ += 30;
@@ -68,11 +71,51 @@ public class LevelGenerator : MonoBehaviour
             {
                 case ChunkType.Obstacle:
                     {
+                        foreach (ObstacleWall obstacle in chunks[i].Obstacles)
+                        {
+                            obstacleWall = Instantiate(obstacleObjects[obstacle.Type], transform, false);
+
+                            if (currentDirection == Direction.Straight)
+                            {
+                                obstacleWall.transform.position = new Vector3(currentSpawnX - 2, 1.5f, currentSpawnZ - 15 + obstacle.SpawnPosition);
+                            }
+                            else if (currentDirection == Direction.Left)
+                            {
+                                obstacleWall.transform.rotation = Quaternion.Euler(0, -90, 0);
+                                obstacleWall.transform.position = new Vector3(currentSpawnX + 15 - obstacle.SpawnPosition, 1.5f, currentSpawnZ - 2);
+                            }
+                            else
+                            {
+                                obstacleWall.transform.rotation = Quaternion.Euler(0, 90, 0);
+                                obstacleWall.transform.position = new Vector3(currentSpawnX - 15 + obstacle.SpawnPosition, 1.5f, currentSpawnZ + 2);
+                            }       
+                        }
+
                         break;
                     }
 
                 case ChunkType.Slime:
-                    {                        
+                    {
+                        foreach (SlimePool slimePool in chunks[i].SlimePools)
+                        {
+                            slime = Instantiate(slimeObject, transform, false);
+
+                            if (currentDirection == Direction.Straight)
+                            {
+                                slime.transform.position = new Vector3(slimePool.RelativeSpawnPositionX + currentSpawnX, 1.01f, currentSpawnZ - 10 + slimePool.RelativeSpawnPositionZ);
+                            }
+                            else if (currentDirection == Direction.Left)
+                            {
+                                slime.transform.rotation = Quaternion.Euler(0, 90, 0);
+                                slime.transform.position = new Vector3(currentSpawnX + 10 - slimePool.RelativeSpawnPositionZ, 1.01f, slimePool.RelativeSpawnPositionX + currentSpawnZ);
+                            }
+                            else
+                            {
+                                slime.transform.rotation = Quaternion.Euler(0, 90, 0);
+                                slime.transform.position = new Vector3(currentSpawnX - 10 + slimePool.RelativeSpawnPositionZ, 1.01f, slimePool.RelativeSpawnPositionX + currentSpawnZ);
+                            }
+                        }
+
                         break;
                     }
                 default:
@@ -180,6 +223,15 @@ public class LevelGenerator : MonoBehaviour
         SaveLevel(levelName);     
     }
 
+    private void InstantiateColumn(GameObject block, int columnHeight, int spawnX, int spawnZ)
+    {
+        for (int i = 0; i < columnHeight; i++)
+        {
+            GameObject columnObject = Instantiate(block, transform, false);
+            columnObject.transform.position = new Vector3(spawnX, i + 1.5f, spawnZ);
+        }
+    }
+
     private void SaveLevel(string levelName)
     {
         levelData[Level].Chunks = chunks;
@@ -191,25 +243,42 @@ public class LevelGenerator : MonoBehaviour
     private Chunk GenerateChunk()
     {
         Chunk chunk = new Chunk();
-        int random;
+        int step;
 
-        random = Random.Range(1, 3);
-        chunk.Type = (ChunkType)random;
+        chunk.Type = (ChunkType)Random.Range(1, 3);
 
         switch(chunk.Type)
         {
             case ChunkType.Obstacle:
                 {
                     chunk = Chunk.GetObstacleChunk(chunk);
-                    chunk.ObstacleCount = Random.Range(1, 6);
-                    chunk.SlimeCount = 0;
+                    chunk.Obstacles = new ObstacleWall[Random.Range(2, 5)];
+                    step = 25 / chunk.Obstacles.Length;
+
+                    for (int i = 0; i < chunk.Obstacles.Length; i++)
+                    {
+                        chunk.Obstacles[i] = new ObstacleWall();
+                        chunk.Obstacles[i].Type = Random.Range(0, 1);
+                        chunk.Obstacles[i].SpawnPosition = step * i;
+                    }
+
+                    chunk.SlimePools = null;
                     break;
                 }
             case ChunkType.Slime:
                 {
                     chunk = Chunk.GetSlimeChunk(chunk);
-                    chunk.ObstacleCount = 0;
-                    chunk.SlimeCount = Random.Range(1, 4);
+                    chunk.Obstacles = null;
+                    chunk.SlimePools = new SlimePool[Random.Range(1, 4)];
+                    step = 25 / chunk.SlimePools.Length;
+
+                    for (int i = 0; i < chunk.SlimePools.Length; i++)
+                    {
+                        chunk.SlimePools[i] = new SlimePool();
+                        chunk.SlimePools[i].RelativeSpawnPositionX = Random.Range(-2, 3);
+                        chunk.SlimePools[i].RelativeSpawnPositionZ = step * i;
+                    }
+
                     break;
                 }
         }

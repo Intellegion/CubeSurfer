@@ -21,10 +21,10 @@ public class Chunk
     public ChunkType Type;
 
     [Range(0, 5)]
-    public int ObstacleCount;
+    public ObstacleWall[] Obstacles;
 
     [Range(0, 3)]
-    public int SlimeCount;
+    public SlimePool[] SlimePools;
 
     public bool ShouldTurn;
 
@@ -44,7 +44,7 @@ public class Chunk
 
     public static Chunk GetSlimeChunk(Chunk chunk)
     {
-        chunk.Type = ChunkType.Obstacle;
+        chunk.Type = ChunkType.Slime;
         return chunk;
     }
 }

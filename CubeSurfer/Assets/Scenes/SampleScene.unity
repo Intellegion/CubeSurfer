@@ -332,7 +332,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 292234970}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.27758, y: 6.11, z: -12.77}
+  m_LocalPosition: {x: 1.27758, y: 6.11, z: -22.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -597,7 +597,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathObject: {fileID: 1136439140765069531, guid: 79f5bc84590d5ee4fbc464a14a77f76d,
     type: 3}
-  obstacleObject: {fileID: 8884910526438476731, guid: 90d68c3b0dfc2604989e1792792ee6dc,
+  obstacleObjects:
+  - {fileID: 6172702298115700642, guid: b0005b6b3b9f75d4a9d2959fa5346b6c, type: 3}
+  slimeObject: {fileID: 1001361264079351040, guid: 4b06bbe9345248444ad385cd77961609,
     type: 3}
   archObject: {fileID: 3809596772390072527, guid: 7fd8b403d04777749ad0b5dcdc9b7ad8,
     type: 3}
@@ -776,7 +778,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1568862000}
   m_LocalRotation: {x: 0.06306309, y: -0.052339558, z: 0.003311853, w: 0.99663067}
-  m_LocalPosition: {x: 1.27758, y: 6.11, z: -12.77}
+  m_LocalPosition: {x: 1.27758, y: 6.11, z: -22.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -829,7 +831,7 @@ PrefabInstance:
     - target: {fileID: 3717819745648909320, guid: 8f15916072bc76f409c5c0825a89aa8e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 3717819745648909320, guid: 8f15916072bc76f409c5c0825a89aa8e,
         type: 3}
