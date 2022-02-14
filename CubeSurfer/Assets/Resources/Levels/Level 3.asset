@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a15292fa1f65bc42b5b556d400f7967, type: 3}
-  m_Name: Level 2
+  m_Name: Level 3
   m_EditorClassIdentifier: 
   Chunks:
   - Type: 0
@@ -23,36 +23,18 @@ MonoBehaviour:
     Obstacle:
       Type: 0
       SpawnPosition: 0
+    ShouldTurn: 0
+    TurnDirection: 0
+  - Type: 1
+    Obstacle:
+      Type: 0
+      SpawnPosition: 13
     ShouldTurn: 1
     TurnDirection: 2
-  - Type: 1
-    Obstacle:
-      Type: 9
-      SpawnPosition: 17
-    ShouldTurn: 1
-    TurnDirection: 1
-  - Type: 2
-    Obstacle:
-      Type: 0
-      SpawnPosition: 0
-    ShouldTurn: 0
-    TurnDirection: 0
-  - Type: 1
-    Obstacle:
-      Type: 5
-      SpawnPosition: 13
-    ShouldTurn: 0
-    TurnDirection: 0
-  - Type: 0
-    Obstacle:
-      Type: 0
-      SpawnPosition: 0
-    ShouldTurn: 0
-    TurnDirection: 0
   - Type: 1
     Obstacle:
       Type: 6
-      SpawnPosition: 19
+      SpawnPosition: 13
     ShouldTurn: 1
     TurnDirection: 1
   - Type: 2
@@ -61,24 +43,48 @@ MonoBehaviour:
       SpawnPosition: 0
     ShouldTurn: 0
     TurnDirection: 0
+  - Type: 1
+    Obstacle:
+      Type: 4
+      SpawnPosition: 18
+    ShouldTurn: 0
+    TurnDirection: 0
   - Type: 0
     Obstacle:
       Type: 0
       SpawnPosition: 0
+    ShouldTurn: 0
+    TurnDirection: 0
+  - Type: 1
+    Obstacle:
+      Type: 9
+      SpawnPosition: 19
     ShouldTurn: 1
     TurnDirection: 2
   - Type: 0
     Obstacle:
       Type: 0
       SpawnPosition: 0
-    ShouldTurn: 1
-    TurnDirection: 2
+    ShouldTurn: 0
+    TurnDirection: 0
+  - Type: 1
+    Obstacle:
+      Type: 8
+      SpawnPosition: 13
+    ShouldTurn: 0
+    TurnDirection: 0
   - Type: 1
     Obstacle:
       Type: 2
-      SpawnPosition: 18
-    ShouldTurn: 1
-    TurnDirection: 1
+      SpawnPosition: 13
+    ShouldTurn: 0
+    TurnDirection: 0
+  - Type: 2
+    Obstacle:
+      Type: 0
+      SpawnPosition: 0
+    ShouldTurn: 0
+    TurnDirection: 0
   - Type: 0
     Obstacle:
       Type: 0
@@ -90,14 +96,8 @@ MonoBehaviour:
       Type: 0
       SpawnPosition: 0
     ShouldTurn: 1
-    TurnDirection: 2
-  - Type: 0
-    Obstacle:
-      Type: 0
-      SpawnPosition: 0
-    ShouldTurn: 1
     TurnDirection: 1
-  - Type: 2
+  - Type: 0
     Obstacle:
       Type: 0
       SpawnPosition: 0

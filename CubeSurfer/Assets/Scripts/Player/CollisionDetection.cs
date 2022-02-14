@@ -27,10 +27,18 @@ public class CollisionDetection : MonoBehaviour
             this.enabled = false;
             transform.parent = null;
             playerMovement.DecrementCube(gameObject);
+
+            foreach (GameObject cubes in playerMovement.cubes)
+            {
+                gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll | ~RigidbodyConstraints.FreezePositionY;
+            }
         }
         else if (collision.collider.tag.Equals("player"))
         {
-            gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll | ~RigidbodyConstraints.FreezePositionY;
+            foreach (GameObject cubes in playerMovement.cubes)
+            {
+                gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            }
         }
         else if (collision.collider.tag.Equals("path"))
         {
@@ -116,7 +124,7 @@ public class CollisionDetection : MonoBehaviour
 
         else if (other.tag.Equals("waypoint"))
         {
-            playerMovement.progress++;
+            playerMovement.IncreaseProgress();
         }
     }
 

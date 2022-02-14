@@ -26,7 +26,7 @@ public class LevelProgress : MonoBehaviour
 
     private void GameOver(bool didWin)
     {
-        int currentLevel = LevelGeneratorComponent.Level + 1;
+        int currentLevel = Constants.LEVEL;
 
         UIManagerComponent.ShowPanel(UIManagerComponent.GameOverPanel);
 
@@ -36,12 +36,13 @@ public class LevelProgress : MonoBehaviour
 
             if (PlayerPrefs.GetInt("Progress") < currentLevel)
             {
-                PlayerPrefs.SetInt("Progress", currentLevel);
-
-                if (currentLevel > UIManagerComponent.LevelButtons.Length)
+                if (currentLevel > UIManagerComponent.LevelButtons.Length - 1)
                 {
                     return;
                 }
+
+                PlayerPrefs.SetInt("Progress", currentLevel);
+
 
                 UIManagerComponent.LevelButtons[currentLevel].interactable = true;
             }
@@ -53,14 +54,23 @@ public class LevelProgress : MonoBehaviour
     public void StartGame()
     {
         Constants.CONTINUE = false;
+        UIManagerComponent.NextButton.gameObject.SetActive(false);
         UIManagerComponent.HidePanel(UIManagerComponent.StartPanel);
         UIManagerComponent.ShowPanel(UIManagerComponent.HUDPanel);
         playerMovement.enabled = true;
     }
 
-    public void NextLevel()
+    public void NextLevel(int currentLevel = 0)
     {
-        Constants.LEVEL++;
+        if (currentLevel == 0)
+        {
+            Constants.LEVEL++;
+        }
+        else
+        {
+            Constants.LEVEL = currentLevel;
+        }
+
         Constants.CONTINUE = true;
         SceneManager.LoadScene(0);
     }

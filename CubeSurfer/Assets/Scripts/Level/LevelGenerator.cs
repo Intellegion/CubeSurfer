@@ -27,7 +27,7 @@ public class LevelGenerator : MonoBehaviour
     private GameObject coinObject;
 
     [SerializeField]
-    private CinemachineVirtualCamera vCam;
+    private int maxChunks;
 
     private LevelData[] levelData;
 
@@ -50,9 +50,9 @@ public class LevelGenerator : MonoBehaviour
 
     private void Start()
     {
-        Level = Constants.LEVEL;
+        Constants.MAX_CHUNKS = maxChunks;
 
-        chunks = new Chunk[10];
+        chunks = new Chunk[maxChunks];
 
         levelData = new LevelData[3];
         currentDirection = Direction.Straight;
@@ -60,7 +60,7 @@ public class LevelGenerator : MonoBehaviour
         currentSpawnX = 0;
         currentSpawnZ = 0;
 
-        GenerateLevel("Level " + Level.ToString());
+        GenerateLevel("Level " + Constants.LEVEL.ToString());
     }        
 
     public void GenerateLevel(string levelName)
@@ -72,7 +72,7 @@ public class LevelGenerator : MonoBehaviour
         path.transform.position = new Vector3(currentSpawnX, 0, currentSpawnZ);
         currentSpawnZ += 30;
 
-        for (int i = 1; i < 10; i++)
+        for (int i = 1; i < maxChunks; i++)
         {
             chunks[i] = GenerateChunk();
             path = Instantiate(pathObject, transform, false);
@@ -161,7 +161,7 @@ public class LevelGenerator : MonoBehaviour
                     }
             }
 
-            if (i == 9)
+            if (i == maxChunks - 1)
             {
                 break;
             }

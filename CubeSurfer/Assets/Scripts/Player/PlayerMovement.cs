@@ -1,15 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
-
-    [SerializeField]
     private float Velocity;
-
-    [SerializeField]
     private float Sensitivity;
 
     [SerializeField]
@@ -18,9 +14,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private LevelProgress levelProgress;
 
+    [SerializeField]
+    private GameObject Head;
+
     public Transform splashContainer;
 
     public GameObject PlayerCube;
+
+    public Slider ProgressSlider;
 
     public int Score;
 
@@ -62,6 +63,9 @@ public class PlayerMovement : MonoBehaviour
         CanControl = true;
         movementVector = new Vector2();
         progress = 0;
+        ProgressSlider.value = 0;
+        Velocity = Constants.VELOCITY;
+        Sensitivity = Constants.SENSITIVITY;
         StartCoroutine(ClearSplashes());
     }
 
@@ -82,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            //xInput = Input.GetAxisRaw("Horizontal") * Sensitivity * Time.deltaTime;
+            xInput = Input.GetAxisRaw("Horizontal") * Sensitivity * Time.deltaTime;
             movementVector = transform.position;
 
             if (currentDirection == Direction.Straight)
@@ -139,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
     {
         GameObject go = Instantiate(PlayerCube, transform, false);
         go.transform.localPosition = Vector3.up * cubes.Count;
+        Head.transform.localPosition = go.transform.localPosition + Vector3.up;
         cubes.Add(go);
     }
 
@@ -206,7 +211,7 @@ public class PlayerMovement : MonoBehaviour
     public void StopMovement()
     {
         Velocity = Sensitivity = 0;
-        levelProgress.OnGameOverEvent.Invoke(progress >= 9 ? true : false);
+        levelProgress.OnGameOverEvent.Invoke(progress >= Constants.MAX_CHUNKS ? true : false);
     }
 
     public void Respawn()
@@ -244,5 +249,11 @@ public class PlayerMovement : MonoBehaviour
 
         Velocity = Constants.VELOCITY;
         Sensitivity = Constants.SENSITIVITY;
+    }
+
+    public void IncreaseProgress()
+    {
+        progress++;
+        ProgressSlider.value = (float) progress / Constants.MAX_CHUNKS;
     }
 }

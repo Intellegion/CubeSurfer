@@ -15,8 +15,10 @@ public class UIManager : MonoBehaviour
 
     public Button[] LevelButtons;
 
+    public Slider ProgressSlider;
     private void Start()
     {
+        TotalScoreText.text = PlayerPrefs.GetInt("TotalScore").ToString();
         EnableLevels();
     }
 
