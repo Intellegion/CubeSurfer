@@ -134,7 +134,7 @@ public class LevelGenerator : MonoBehaviour
                         GameObject obj;
                         for (int j = 0; j < random; j++)
                         {
-                            if (j % 2 == 0)
+                            if (j % 3 == 0)
                             {
                                 obj = pickUpObject;
                             }
@@ -286,7 +286,7 @@ public class LevelGenerator : MonoBehaviour
                     chunk.Obstacle = new ObstacleWall();
 
                     chunk.Obstacle.Type = Random.Range(0, obstacleObjects.Length);
-                    chunk.Obstacle.SpawnPosition = Random.Range(12, 18);           
+                    chunk.Obstacle.SpawnPosition = Random.Range(13, 17);           
 
                     chunk.SlimePools = null;
                     break;
