@@ -70,7 +70,7 @@ public class LevelGenerator : MonoBehaviour
 
         path = Instantiate(pathObject, transform, false);
         path.transform.position = new Vector3(currentSpawnX, 0, currentSpawnZ);
-        currentSpawnZ += 30;
+        currentSpawnZ += 40;
 
         for (int i = 1; i < maxChunks; i++)
         {
@@ -88,17 +88,17 @@ public class LevelGenerator : MonoBehaviour
 
                         if (currentDirection == Direction.Straight)
                         {
-                            obstacleWall.transform.position = new Vector3(currentSpawnX - 2, 1.5f, currentSpawnZ - 15 + obstacle.SpawnPosition);
+                            obstacleWall.transform.position = new Vector3(currentSpawnX - 2, 1.5f, currentSpawnZ - 20 + obstacle.SpawnPosition);
                         }
                         else if (currentDirection == Direction.Left)
                         {
                             obstacleWall.transform.rotation = Quaternion.Euler(0, -90, 0);
-                            obstacleWall.transform.position = new Vector3(currentSpawnX + 15 - obstacle.SpawnPosition, 1.5f, currentSpawnZ - 2);
+                            obstacleWall.transform.position = new Vector3(currentSpawnX + 20 - obstacle.SpawnPosition, 1.5f, currentSpawnZ - 2);
                         }
                         else
                         {
                             obstacleWall.transform.rotation = Quaternion.Euler(0, 90, 0);
-                            obstacleWall.transform.position = new Vector3(currentSpawnX - 15 + obstacle.SpawnPosition, 1.5f, currentSpawnZ + 2);
+                            obstacleWall.transform.position = new Vector3(currentSpawnX - 20 + obstacle.SpawnPosition, 1.5f, currentSpawnZ + 2);
                         }       
                         break;
                     }
@@ -130,7 +130,7 @@ public class LevelGenerator : MonoBehaviour
                 default:
                     {
                         int random = Random.Range(1, 5);
-                        int step = 25 / random;
+                        int step = 30 / random;
                         GameObject obj;
                         for (int j = 0; j < random; j++)
                         {
@@ -146,15 +146,15 @@ public class LevelGenerator : MonoBehaviour
                             GameObject pickup = Instantiate(obj, transform, false);
                             if (currentDirection == Direction.Straight)
                             {
-                                pickup.transform.position = new Vector3(Random.Range(-2, 3) + currentSpawnX, 1.5f , currentSpawnZ - 10 + step * j);
+                                pickup.transform.position = new Vector3(Random.Range(-2, 3) + currentSpawnX, 1.5f , currentSpawnZ - 15 + step * j);
                             }
                             else if (currentDirection == Direction.Left)
                             {
-                                pickup.transform.position = new Vector3(currentSpawnX + 10 - step * j, 1.5f, Random.Range(-2, 3) + currentSpawnZ);
+                                pickup.transform.position = new Vector3(currentSpawnX + 15 - step * j, 1.5f, Random.Range(-2, 3) + currentSpawnZ);
                             }
                             else
                             {
-                                pickup.transform.position = new Vector3(currentSpawnX - 10 + step * j, 1.5f , Random.Range(-2, 3) + currentSpawnZ);
+                                pickup.transform.position = new Vector3(currentSpawnX - 15 + step * j, 1.5f , Random.Range(-2, 3) + currentSpawnZ);
                             }
                         }
                         break;
@@ -173,20 +173,20 @@ public class LevelGenerator : MonoBehaviour
                         arch = Instantiate(archObject, transform, false);
                         if (currentDirection == Direction.Straight)
                         {
-                            arch.transform.position = new Vector3(currentSpawnX - 2.5f, 0, currentSpawnZ + 20);
+                            arch.transform.position = new Vector3(currentSpawnX - 2.5f, 0, currentSpawnZ + 25);
                             arch.transform.rotation = Quaternion.Euler(new Vector3(90, 0, 0));
-                            currentSpawnX -= 22.5f;
+                            currentSpawnX -= 27.5f;
                             currentDirection = Direction.Left;
                         }
                         else if (currentDirection == Direction.Right)
                         {
-                            arch.transform.position = new Vector3(currentSpawnX + 20, 0, currentSpawnZ + 2.5f);
+                            arch.transform.position = new Vector3(currentSpawnX + 25, 0, currentSpawnZ + 2.5f);
                             arch.transform.rotation = Quaternion.Euler(new Vector3(90, 90, 0));
-                            currentSpawnX += 22.5f;
+                            currentSpawnX += 27.5f;
                             currentDirection = Direction.Straight;
                         }
 
-                        currentSpawnZ += 22.5f;
+                        currentSpawnZ += 27.5f;
                         break;
                     }
                 case Direction.Right:
@@ -194,35 +194,35 @@ public class LevelGenerator : MonoBehaviour
                         arch = Instantiate(archObject, transform, false);
                         if (currentDirection == Direction.Straight)
                         {
-                            arch.transform.position = new Vector3(currentSpawnX + 2.5f, 0, currentSpawnZ + 20);
+                            arch.transform.position = new Vector3(currentSpawnX + 2.5f, 0, currentSpawnZ + 25);
                             arch.transform.rotation = Quaternion.Euler(new Vector3(90, -90, 0)); 
-                            currentSpawnX += 22.5f;
+                            currentSpawnX += 27.5f;
                             currentDirection = Direction.Right;
                         }
                         else if (currentDirection == Direction.Left)
                         {
-                            arch.transform.position = new Vector3(currentSpawnX - 20, 0, currentSpawnZ + 2.5f);
+                            arch.transform.position = new Vector3(currentSpawnX - 25, 0, currentSpawnZ + 2.5f);
                             arch.transform.rotation = Quaternion.Euler(new Vector3(90, 180, 0));
-                            currentSpawnX -= 22.5f;
+                            currentSpawnX -= 27.5f;
                             currentDirection = Direction.Straight;
                         }
 
-                        currentSpawnZ += 22.5f;
+                        currentSpawnZ += 27.5f;
                         break;
                     }
                 default:
                     {
                         if (currentDirection == Direction.Straight )
                         {
-                            currentSpawnZ += 30;
+                            currentSpawnZ += 40;
                         }
                         else if (currentDirection == Direction.Left)
                         {
-                            currentSpawnX -= 30;
+                            currentSpawnX -= 40;
                         }
                         else
                         {
-                            currentSpawnX += 30;
+                            currentSpawnX += 40;
                         }
 
                         break;
@@ -235,14 +235,14 @@ public class LevelGenerator : MonoBehaviour
             case Direction.Straight:
                 {
                     GameObject end = Instantiate(endObject, transform, false);
-                    end.transform.position = new Vector3(currentSpawnX, 1.5f, currentSpawnZ + 20.5f);
+                    end.transform.position = new Vector3(currentSpawnX, 1.5f, currentSpawnZ + 25.5f);
                     end.transform.SetParent(transform);
                     break;
                 }
             case Direction.Left:
                 {
                     GameObject end = Instantiate(endObject, transform, false);
-                    end.transform.position = new Vector3(currentSpawnX - 20.5f, 1.5f, currentSpawnZ);
+                    end.transform.position = new Vector3(currentSpawnX - 25.5f, 1.5f, currentSpawnZ);
                     end.transform.rotation = Quaternion.Euler(0, -90, 0); 
                     end.transform.SetParent(transform);
                     break;
@@ -252,7 +252,7 @@ public class LevelGenerator : MonoBehaviour
                     GameObject end = Instantiate(endObject, transform, false);
                     end.transform.SetParent(transform);
                     end.transform.rotation = Quaternion.Euler(0, 90, 0);
-                    end.transform.position = new Vector3(currentSpawnX + 20.5f, 1.5f, currentSpawnZ);
+                    end.transform.position = new Vector3(currentSpawnX + 25.5f, 1.5f, currentSpawnZ);
                     break;
                 }
         }
@@ -286,7 +286,7 @@ public class LevelGenerator : MonoBehaviour
                     chunk.Obstacle = new ObstacleWall();
 
                     chunk.Obstacle.Type = Random.Range(0, obstacleObjects.Length);
-                    chunk.Obstacle.SpawnPosition = Random.Range(13, 17);           
+                    chunk.Obstacle.SpawnPosition = Random.Range(17, 24);           
 
                     chunk.SlimePools = null;
                     break;
@@ -295,7 +295,7 @@ public class LevelGenerator : MonoBehaviour
                 {
                     chunk = Chunk.GetSlimeChunk(chunk);
                     chunk.SlimePools = new SlimePool[Random.Range(1, 3)];
-                    step = 25 / chunk.SlimePools.Length;
+                    step = 30 / chunk.SlimePools.Length;
 
                     for (int i = 0; i < chunk.SlimePools.Length; i++)
                     {
