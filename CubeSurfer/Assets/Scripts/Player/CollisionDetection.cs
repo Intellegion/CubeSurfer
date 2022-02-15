@@ -48,22 +48,27 @@ public class CollisionDetection : MonoBehaviour
         {
             gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll | ~RigidbodyConstraints.FreezePositionY;
 
+            float xClampMin, xClampMax, zClampMin, zClampMax;
             // Calculating the bounds on each path to avoid letting the player fall out of the map
             if (playerMovement.GetDirection() == Direction.Straight)
             {
-                playerMovement.XClampMin = collision.collider.transform.position.x - collision.collider.transform.localScale.x / 2 + 0.5f;
-                playerMovement.XClampMax = collision.collider.transform.position.x + collision.collider.transform.localScale.x / 2 - 0.5f;
+                xClampMin = collision.collider.transform.position.x - collision.collider.transform.localScale.x / 2 + 0.5f;
+                xClampMax = collision.collider.transform.position.x + collision.collider.transform.localScale.x / 2 - 0.5f;
+
+                playerMovement.SetXClamps(xClampMin, xClampMax);
             }
 
             else
             {
-                playerMovement.ZClampMin = collision.collider.transform.position.z - collision.collider.transform.localScale.x / 2 + 0.5f;
-                playerMovement.ZClampMax = collision.collider.transform.position.z + collision.collider.transform.localScale.x / 2 - 0.5f;
+                zClampMin = collision.collider.transform.position.z - collision.collider.transform.localScale.x / 2 + 0.5f;
+                zClampMax = collision.collider.transform.position.z + collision.collider.transform.localScale.x / 2 - 0.5f;
+
+                playerMovement.SetZClamps(zClampMin, zClampMax);
             }
         }
 
         // Automatically turn the player in curves
-        // Movement disabled in order to keep the player on track
+        // Horizontal movement disabled temporarily in order to keep the player on track
         else if (collision.collider.tag.Equals("turning"))
         {
             playerMovement.CanControl = false;

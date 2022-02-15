@@ -1561,7 +1561,7 @@ PrefabInstance:
         type: 3}
       propertyPath: MenuMusic
       value: 
-      objectReference: {fileID: 8300000, guid: bcb36bcf91c49954489537dd9e7f5a4f, type: 3}
+      objectReference: {fileID: 8300000, guid: 7cbd768347877ee4ab0afc1c398c520d, type: 3}
     - target: {fileID: 6312187740521787991, guid: a00edd8dcacaf8e47810b569e39c8620,
         type: 3}
       propertyPath: MainCamera
@@ -1571,7 +1571,7 @@ PrefabInstance:
         type: 3}
       propertyPath: VictoryMusic
       value: 
-      objectReference: {fileID: 8300000, guid: e753e608a36e1034ebacaa30eb6a55dc, type: 3}
+      objectReference: {fileID: 8300000, guid: d611c2b91f72ff24c93f82964a2792d5, type: 3}
     - target: {fileID: 6312187740521787991, guid: a00edd8dcacaf8e47810b569e39c8620,
         type: 3}
       propertyPath: UIManagerComponent
@@ -1596,11 +1596,11 @@ PrefabInstance:
         type: 3}
       propertyPath: LevelMusic.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 8b894429411c39c448d9f94154a635a5, type: 3}
+      objectReference: {fileID: 8300000, guid: b9066360e3fddd046a0b97836ebdb2de, type: 3}
     - target: {fileID: 6312187740521787991, guid: a00edd8dcacaf8e47810b569e39c8620,
         type: 3}
       propertyPath: LevelMusic.Array.data[2]
       value: 
-      objectReference: {fileID: 8300000, guid: 817ab7fa349c9fd4699049d507024f16, type: 3}
+      objectReference: {fileID: 8300000, guid: 0bc2b2a04e20ceb439b0ee9efea51554, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a00edd8dcacaf8e47810b569e39c8620, type: 3}

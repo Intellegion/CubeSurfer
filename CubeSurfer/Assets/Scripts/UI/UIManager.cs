@@ -44,7 +44,7 @@ public class UIManager : MonoBehaviour
     public void EnableLevels()
     {
         int progress = PlayerPrefs.GetInt("Progress");
-        for (int i = 0; i < progress; i++)
+        for (int i = 0; i <= progress; i++)
         {
             LevelButtons[i].interactable = true;
         }

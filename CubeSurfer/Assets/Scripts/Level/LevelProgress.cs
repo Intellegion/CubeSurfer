@@ -17,12 +17,17 @@ public class LevelProgress : MonoBehaviour
 
     private int curentTotal;
 
-    public Material[] SkyBoxes;
-    public AudioClip[] LevelMusic;
+    [SerializeField]
+    private Material[] SkyBoxes;
 
-    public AudioClip MenuMusic;
-    public AudioClip VictoryMusic;
-    // Start is called before the first frame update
+    [SerializeField]
+    private AudioClip[] LevelMusic;
+
+    [SerializeField]
+    private AudioClip MenuMusic;
+    [SerializeField]
+    private AudioClip VictoryMusic;
+
     void Start()
     {
         AudioManagerComponent.PlayMusic(MenuMusic);
@@ -40,12 +45,11 @@ public class LevelProgress : MonoBehaviour
     // Save progress if the player clears a level
     private void GameOver(bool didWin)
     {
-        int currentLevel = Constants.LEVEL;
-
         UIManagerComponent.ShowPanel(UIManagerComponent.GameOverPanel);
 
         if (didWin)
         {
+            int currentLevel = Constants.LEVEL;
             UIManagerComponent.ResultText.text = "VICTORY";
             PlayerPrefs.SetInt("TotalScore", curentTotal + playerMovement.Score);
 

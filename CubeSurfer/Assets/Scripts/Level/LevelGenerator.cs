@@ -45,8 +45,8 @@ public class LevelGenerator : MonoBehaviour
 
     public GameObject Player;
 
-    public Direction currentDirection;
-    public int Level = 0;
+    private Direction currentDirection;
+    private int Level = 0;
 
     private void Start()
     {

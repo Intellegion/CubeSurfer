@@ -56,8 +56,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 7416536dbe0334cfd888dd1beb75a9fb, type: 2}
   - {fileID: 2100000, guid: 9af23ba5fa5364ff598888460e0e2759, type: 2}
   LevelMusic:
-  - {fileID: 8300000, guid: 8b894429411c39c448d9f94154a635a5, type: 3}
-  - {fileID: 8300000, guid: 17dce37c0cf9e23499cb40a88ff4e9d5, type: 3}
-  - {fileID: 8300000, guid: 817ab7fa349c9fd4699049d507024f16, type: 3}
-  MenuMusic: {fileID: 8300000, guid: bcb36bcf91c49954489537dd9e7f5a4f, type: 3}
-  VictoryMusic: {fileID: 8300000, guid: e753e608a36e1034ebacaa30eb6a55dc, type: 3}
+  - {fileID: 8300000, guid: b9066360e3fddd046a0b97836ebdb2de, type: 3}
+  - {fileID: 8300000, guid: 557a3fd488606d9429c7ebefee82b7a0, type: 3}
+  - {fileID: 8300000, guid: 0bc2b2a04e20ceb439b0ee9efea51554, type: 3}
+  MenuMusic: {fileID: 8300000, guid: 7cbd768347877ee4ab0afc1c398c520d, type: 3}
+  VictoryMusic: {fileID: 8300000, guid: d611c2b91f72ff24c93f82964a2792d5, type: 3}

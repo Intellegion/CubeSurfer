@@ -15,8 +15,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private GameObject Head;
 
-    public float Velocity;
-    public float Sensitivity;
+    private float velocity;
+    private float sensitivity;
 
     // Audio fields
     public AudioManager AudioManagerComponent;
@@ -42,10 +42,10 @@ public class PlayerMovement : MonoBehaviour
     public bool CanControl;
 
     // Used to clamp movement on path
-    public float XClampMin;
-    public float XClampMax;
-    public float ZClampMin;
-    public float ZClampMax;
+    private float XClampMin;
+    private float XClampMax;
+    private float ZClampMin;
+    private float ZClampMax;
 
     public int progress;
 
@@ -85,8 +85,8 @@ public class PlayerMovement : MonoBehaviour
         progress = 0;
         ProgressSlider.value = 0;
 
-        Velocity = Constants.VELOCITY;
-        Sensitivity = Constants.SENSITIVITY;
+        velocity = Constants.VELOCITY;
+        sensitivity = Constants.SENSITIVITY;
 
         StartCoroutine(ClearSplashes());
     }
@@ -94,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         // Translating the parent in order to make all cubes move at a constant speed
-        transform.Translate(Vector3.forward * Velocity * Time.deltaTime);
+        transform.Translate(Vector3.forward * velocity * Time.deltaTime);
 
         if (CanControl)
         {
@@ -105,11 +105,11 @@ public class PlayerMovement : MonoBehaviour
                 // Swipe to move player
                 if (touch.phase == TouchPhase.Moved)
                 {
-                    xInput = touch.deltaPosition.x * Sensitivity * Time.deltaTime;
+                    xInput = touch.deltaPosition.x * sensitivity * Time.deltaTime;
                 }
             }
 
-            xInput = Input.GetAxisRaw("Horizontal") * Sensitivity * 14 * Time.deltaTime;
+            xInput = Input.GetAxisRaw("Horizontal") * sensitivity * 14 * Time.deltaTime;
             movementVector = transform.position;
 
             // Position clamps
@@ -219,21 +219,20 @@ public class PlayerMovement : MonoBehaviour
     {
         while (true)
         {
-            if (splashes.Count > 3)
+            if (splashes.Count > 5)
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 5; i++)
                 {
                     Destroy(splashes[i]);
                     splashes.RemoveAt(i);
                 }
-
-                yield return new WaitForSeconds(0.3f);
             }
-
             else
             {
                 yield return new WaitForSeconds(1);
             }
+
+            yield return new WaitForSeconds(0.3f);
         }
     }
 
@@ -241,7 +240,7 @@ public class PlayerMovement : MonoBehaviour
     public void StopMovement(bool bonus = false)
     {
         bool victory = progress >= Constants.MAX_CHUNKS;
-        Velocity = Sensitivity = 0;
+        velocity = sensitivity = 0;
 
         if (victory)
         {
@@ -327,5 +326,17 @@ public class PlayerMovement : MonoBehaviour
     public void SetDirection(Direction direction)
     {
         currentDirection = direction;
+    }
+
+    public void SetXClamps(float min, float max)
+    {
+        XClampMin = min;
+        XClampMax = max;
+    }
+
+    public void SetZClamps(float min, float max)
+    {
+        ZClampMin = min;
+        ZClampMax = max;
     }
 }
