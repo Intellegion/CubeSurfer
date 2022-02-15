@@ -140,7 +140,7 @@ public class LevelGenerator : MonoBehaviour
                         for (int j = 0; j < random; j++)
                         {
                             // More possibility to spawn coins
-                            if (j % 3 == 0)
+                            if (j % 4 == 0)
                             {
                                 obj = pickUpObject;
                             }

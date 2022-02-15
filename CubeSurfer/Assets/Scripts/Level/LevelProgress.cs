@@ -38,7 +38,7 @@ public class LevelProgress : MonoBehaviour
         // Used when clicking next level
         if (Constants.CONTINUE)
         {
-            StartGame();
+            StartGame(Constants.LEVEL);
         }
     }
 
@@ -76,8 +76,13 @@ public class LevelProgress : MonoBehaviour
     }
 
     // Configuring the start of a level
-    public void StartGame()
+    public void StartGame(int level = 0)
     {
+        if (level == 0)
+        {
+            Constants.LEVEL = 1;
+        }
+
         MainCamera.GetComponent<Skybox>().material = SkyBoxes[Constants.LEVEL - 1];
         AudioManagerComponent.PlayMusic(LevelMusic[Constants.LEVEL - 1]);
         UIManagerComponent.NextButton.gameObject.SetActive(false);

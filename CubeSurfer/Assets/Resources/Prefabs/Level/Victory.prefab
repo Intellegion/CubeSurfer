@@ -126,6 +126,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2572610931161634825, guid: 65ecce1c0be6de74ab5e435b9eee35ad,
         type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2572610931161634825, guid: 65ecce1c0be6de74ab5e435b9eee35ad,
+        type: 3}
       propertyPath: ShapeModule.m_Position.x
       value: 1.5
       objectReference: {fileID: 0}

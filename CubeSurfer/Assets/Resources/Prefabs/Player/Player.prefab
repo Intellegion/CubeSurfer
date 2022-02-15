@@ -165,6 +165,10 @@ MonoBehaviour:
   initialCube: {fileID: 2456759599886250697}
   levelProgress: {fileID: 0}
   Head: {fileID: 3385030591407732177}
+  PlayerCube: {fileID: 8674091693304017004, guid: 8583346c8b877394d8ce1c9e0d729faf,
+    type: 3}
+  SplashContainer: {fileID: 0}
+  StartPosition: {x: 0, y: 1.5, z: -10}
   AudioManagerComponent: {fileID: 0}
   SlimeEffect: {fileID: 8300000, guid: 993e25ba0ace9654aba8e9d9dd539d73, type: 3}
   ObstacleEffect: {fileID: 8300000, guid: b2f1f221c391d1843841795afc991529, type: 3}
@@ -172,15 +176,10 @@ MonoBehaviour:
   DefeatEffect: {fileID: 8300000, guid: 7f6f28fe2ca23a849a8c734b4427991f, type: 3}
   CoinEffect: {fileID: 8300000, guid: 7cfadec8bcaee3644b15acfefe23f77b, type: 3}
   StackEffect: {fileID: 8300000, guid: 0750085876f93b242a82735171a56661, type: 3}
-  SplashContainer: {fileID: 0}
-  PlayerCube: {fileID: 8674091693304017004, guid: 8583346c8b877394d8ce1c9e0d729faf,
-    type: 3}
   ProgressSlider: {fileID: 0}
   ScoreText: {fileID: 0}
   Score: 0
   CanControl: 0
-  progress: 0
-  StartPosition: {x: 0, y: 0, z: 0}
   cubes: []
   splashes: []
   pickups: []

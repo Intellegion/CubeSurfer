@@ -29,6 +29,7 @@ public class CollisionDetection : MonoBehaviour
             this.enabled = false;
             transform.parent = null;
             playerMovement.DecrementCube(gameObject);
+            playerMovement.ScreenShake(3, 0.3f);
 
             // To avoid unintended physics
             foreach (GameObject cubes in playerMovement.cubes)

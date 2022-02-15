@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Cinemachine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -14,6 +15,22 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private GameObject Head;
+
+    [SerializeField]
+    private GameObject PlayerCube;
+
+    [SerializeField]
+    public Transform SplashContainer;
+
+    [SerializeField]
+    private Vector3 StartPosition;
+
+    [SerializeField]
+    private CinemachineVirtualCamera vCam;
+
+    private CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin;
+
+    private float shakeTimer;
 
     private float velocity;
     private float sensitivity;
@@ -27,17 +44,11 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip CoinEffect;
     public AudioClip StackEffect;
 
-    public Transform SplashContainer;
-
-    public GameObject PlayerCube;
-
     public Slider ProgressSlider;
 
     public TextMeshProUGUI ScoreText;
 
     public int Score;
-
-    
 
     public bool CanControl;
 
@@ -47,9 +58,8 @@ public class PlayerMovement : MonoBehaviour
     private float ZClampMin;
     private float ZClampMax;
 
-    public int progress;
+    private int progress;
 
-    public Vector3 StartPosition;
 
     private Direction currentDirection;
     private Vector3 movementVector;
@@ -67,6 +77,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         cubes.Add(initialCube);
+        cinemachineBasicMultiChannelPerlin = vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
         Initialize();
     }
 
@@ -98,6 +110,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (CanControl)
         {
+            xInput = Input.GetAxisRaw("Horizontal") * sensitivity * 14 * Time.deltaTime;
             if (Input.touchCount > 0)
             {
                 touch = Input.GetTouch(0);
@@ -109,7 +122,6 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            xInput = Input.GetAxisRaw("Horizontal") * sensitivity * 14 * Time.deltaTime;
             movementVector = transform.position;
 
             // Position clamps
@@ -160,6 +172,16 @@ public class PlayerMovement : MonoBehaviour
             }
 
             transform.position = movementVector;
+        }
+
+        if (shakeTimer > 0)
+        {
+            shakeTimer -= Time.deltaTime;
+
+            if (shakeTimer <=0)
+            {
+                cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = 0;
+            }
         }
     }
 
@@ -219,20 +241,13 @@ public class PlayerMovement : MonoBehaviour
     {
         while (true)
         {
-            if (splashes.Count > 5)
+            if (splashes.Count > 0)
             {
-                for (int i = 0; i < 5; i++)
-                {
-                    Destroy(splashes[i]);
-                    splashes.RemoveAt(i);
-                }
-            }
-            else
-            {
-                yield return new WaitForSeconds(1);
+                Destroy(splashes[0]);
+                splashes.RemoveAt(0);
             }
 
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.075f);
         }
     }
 
@@ -317,6 +332,12 @@ public class PlayerMovement : MonoBehaviour
         AudioManagerComponent.PlayClip(CoinEffect);
         Score++;
         ScoreText.text = Score.ToString();
+    }
+
+    public void ScreenShake(float intensity, float time)
+    {
+        cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = intensity;
+        shakeTimer = time;
     }
 
     public Direction GetDirection()
