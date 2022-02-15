@@ -239,6 +239,8 @@ public class PlayerMovement : MonoBehaviour
     // Clearing splashes to optimize level
     private IEnumerator ClearSplashes()
     {
+        yield return new WaitForSeconds(1);
+
         while (true)
         {
             if (splashes.Count > 0)
