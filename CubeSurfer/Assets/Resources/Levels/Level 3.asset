@@ -21,56 +21,8 @@ MonoBehaviour:
     TurnDirection: 0
   - Type: 1
     Obstacle:
-      Type: 4
-      SpawnPosition: 19
-    ShouldTurn: 0
-    TurnDirection: 0
-  - Type: 1
-    Obstacle:
-      Type: 0
-      SpawnPosition: 21
-    ShouldTurn: 0
-    TurnDirection: 0
-  - Type: 1
-    Obstacle:
-      Type: 8
-      SpawnPosition: 17
-    ShouldTurn: 1
-    TurnDirection: 2
-  - Type: 1
-    Obstacle:
-      Type: 0
-      SpawnPosition: 18
-    ShouldTurn: 0
-    TurnDirection: 0
-  - Type: 1
-    Obstacle:
       Type: 5
-      SpawnPosition: 21
-    ShouldTurn: 1
-    TurnDirection: 1
-  - Type: 2
-    Obstacle:
-      Type: 0
-      SpawnPosition: 0
-    ShouldTurn: 0
-    TurnDirection: 0
-  - Type: 1
-    Obstacle:
-      Type: 1
-      SpawnPosition: 22
-    ShouldTurn: 1
-    TurnDirection: 2
-  - Type: 0
-    Obstacle:
-      Type: 0
-      SpawnPosition: 0
-    ShouldTurn: 0
-    TurnDirection: 0
-  - Type: 2
-    Obstacle:
-      Type: 0
-      SpawnPosition: 0
+      SpawnPosition: 23
     ShouldTurn: 1
     TurnDirection: 1
   - Type: 0
@@ -82,13 +34,7 @@ MonoBehaviour:
   - Type: 1
     Obstacle:
       Type: 2
-      SpawnPosition: 17
-    ShouldTurn: 0
-    TurnDirection: 0
-  - Type: 1
-    Obstacle:
-      Type: 7
-      SpawnPosition: 22
+      SpawnPosition: 19
     ShouldTurn: 1
     TurnDirection: 1
   - Type: 0
@@ -97,9 +43,63 @@ MonoBehaviour:
       SpawnPosition: 0
     ShouldTurn: 1
     TurnDirection: 2
+  - Type: 1
+    Obstacle:
+      Type: 8
+      SpawnPosition: 22
+    ShouldTurn: 0
+    TurnDirection: 0
+  - Type: 1
+    Obstacle:
+      Type: 3
+      SpawnPosition: 17
+    ShouldTurn: 1
+    TurnDirection: 2
+  - Type: 0
+    Obstacle:
+      Type: 0
+      SpawnPosition: 0
+    ShouldTurn: 0
+    TurnDirection: 0
+  - Type: 0
+    Obstacle:
+      Type: 0
+      SpawnPosition: 0
+    ShouldTurn: 0
+    TurnDirection: 0
+  - Type: 1
+    Obstacle:
+      Type: 7
+      SpawnPosition: 18
+    ShouldTurn: 0
+    TurnDirection: 0
   - Type: 2
     Obstacle:
       Type: 0
       SpawnPosition: 0
     ShouldTurn: 0
     TurnDirection: 0
+  - Type: 2
+    Obstacle:
+      Type: 0
+      SpawnPosition: 0
+    ShouldTurn: 1
+    TurnDirection: 1
+  - Type: 0
+    Obstacle:
+      Type: 0
+      SpawnPosition: 0
+    ShouldTurn: 0
+    TurnDirection: 0
+  - Type: 1
+    Obstacle:
+      Type: 5
+      SpawnPosition: 17
+    ShouldTurn: 1
+    TurnDirection: 1
+  - Type: 0
+    Obstacle:
+      Type: 0
+      SpawnPosition: 0
+    ShouldTurn: 1
+    TurnDirection: 2
