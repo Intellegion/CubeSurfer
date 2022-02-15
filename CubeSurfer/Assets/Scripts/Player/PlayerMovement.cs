@@ -225,13 +225,18 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void StopMovement()
+    public void StopMovement(bool bonus = false)
     {
         bool victory = progress >= Constants.MAX_CHUNKS;
         Velocity = Sensitivity = 0;
 
         if (victory)
         {
+            if (bonus)
+            {
+                Score *= 5;
+            }
+
             AudioManagerComponent.PlayClip(VictoryEffect);
         }
         else
