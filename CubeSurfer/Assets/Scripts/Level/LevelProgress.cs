@@ -4,7 +4,10 @@ using UnityEngine.SceneManagement;
 
 public class LevelProgress : MonoBehaviour
 {
+    // Event triggered when the level ends
     public UnityEvent<bool> OnGameOverEvent = new UnityEvent<bool>();
+
+    // Components of other managers
     public LevelGenerator LevelGeneratorComponent;
     public UIManager UIManagerComponent;
     public AudioManager AudioManagerComponent;
@@ -27,12 +30,14 @@ public class LevelProgress : MonoBehaviour
         playerMovement = LevelGeneratorComponent.Player.GetComponent<PlayerMovement>();
         OnGameOverEvent.AddListener(GameOver);
 
+        // Used when clicking next level
         if (Constants.CONTINUE)
         {
             StartGame();
         }
     }
 
+    // Save progress if the player clears a level
     private void GameOver(bool didWin)
     {
         int currentLevel = Constants.LEVEL;
@@ -66,6 +71,7 @@ public class LevelProgress : MonoBehaviour
         }
     }
 
+    // Configuring the start of a level
     public void StartGame()
     {
         MainCamera.GetComponent<Skybox>().material = SkyBoxes[Constants.LEVEL - 1];
@@ -78,6 +84,7 @@ public class LevelProgress : MonoBehaviour
         Constants.CONTINUE = false;
     }
 
+    // Reloading scene when clicking next level to reset all values
     public void NextLevel(int currentLevel = 0)
     {
         if (currentLevel == 0)

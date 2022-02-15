@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Static variables to retain variable values across scene changes
 public class Constants : MonoBehaviour
 {
     public static int LEVEL = 1;
@@ -15,6 +16,7 @@ public class Constants : MonoBehaviour
 
     void Start()
     {
+        // Do not destroy object on scene change
         Application.targetFrameRate = 60;
         DontDestroyOnLoad(this.gameObject);
     }

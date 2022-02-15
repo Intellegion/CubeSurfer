@@ -1,11 +1,10 @@
 using System;
 using UnityEngine;
 
+// Serialized class to store slime pool positions on chunk
 [SerializeField]
 public class SlimePool
 {
-    public GameObject SlimeObject;
-
     [Range(5,25)]
     public int RelativeSpawnPositionZ;
 

@@ -22,6 +22,7 @@ public class CollisionDetection : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        // Unparenting objects on collision to only allow the upper objects to pass through
         if (collision.collider.tag.Equals("obstacle"))
         {
             playerMovement.AudioManagerComponent.PlayClip(playerMovement.ObstacleEffect);
@@ -29,6 +30,7 @@ public class CollisionDetection : MonoBehaviour
             transform.parent = null;
             playerMovement.DecrementCube(gameObject);
 
+            // To avoid unintended physics
             foreach (GameObject cubes in playerMovement.cubes)
             {
                 gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll | ~RigidbodyConstraints.FreezePositionY;
@@ -36,6 +38,7 @@ public class CollisionDetection : MonoBehaviour
         }
         else if (collision.collider.tag.Equals("player"))
         {
+            // Stopping individual cubes to move on top of each other
             foreach (GameObject cubes in playerMovement.cubes)
             {
                 gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
@@ -45,7 +48,8 @@ public class CollisionDetection : MonoBehaviour
         {
             gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll | ~RigidbodyConstraints.FreezePositionY;
 
-            if (playerMovement.CurrentDirection == Direction.Straight)
+            // Calculating the bounds on each path to avoid letting the player fall out of the map
+            if (playerMovement.GetDirection() == Direction.Straight)
             {
                 playerMovement.XClampMin = collision.collider.transform.position.x - collision.collider.transform.localScale.x / 2 + 0.5f;
                 playerMovement.XClampMax = collision.collider.transform.position.x + collision.collider.transform.localScale.x / 2 - 0.5f;
@@ -58,6 +62,8 @@ public class CollisionDetection : MonoBehaviour
             }
         }
 
+        // Automatically turn the player in curves
+        // Movement disabled in order to keep the player on track
         else if (collision.collider.tag.Equals("turning"))
         {
             playerMovement.CanControl = false;
@@ -82,6 +88,7 @@ public class CollisionDetection : MonoBehaviour
             }
         }  
 
+        // Decrease cubes gradually on slimy floor
         else if (collision.collider.tag.Equals("slime"))
         {
             playerMovement.AudioManagerComponent.PlayClip(playerMovement.SlimeEffect);
@@ -91,6 +98,7 @@ public class CollisionDetection : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
+        // Create a trail of splashes
         if (collision.collider.gameObject.layer == 6)
         {
             splash = Instantiate(splashObject, (transform.position - surfacePosition) + Vector3.up * 0.01f, Quaternion.identity);
@@ -101,6 +109,7 @@ public class CollisionDetection : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
+        // Stop removing cubes on exiting slimy floor
         if(collision.collider.tag.Equals("slime"))
         {
             playerMovement.AudioManagerComponent.StopSoundFX();
@@ -110,6 +119,7 @@ public class CollisionDetection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // Stack cubes on pickup
         if (other.tag.Equals("pickup"))
         {
             playerMovement.pickups.Add(other.gameObject);
@@ -117,6 +127,7 @@ public class CollisionDetection : MonoBehaviour
             playerMovement.CubePickUp();
         }
 
+        // Collecting coins
         else if (other.tag.Equals("coin"))
         {
             playerMovement.pickups.Add(other.gameObject);
@@ -124,12 +135,14 @@ public class CollisionDetection : MonoBehaviour
             playerMovement.CoinPickUp();
         }
 
+        // Used to measure level progress
         else if (other.tag.Equals("waypoint"))
         {
             playerMovement.IncreaseProgress();
         }
     }
 
+    // Gradual decrease in cubes on slimy ground
     private IEnumerator DecrementCubes()
     {
         while(true)
@@ -139,19 +152,20 @@ public class CollisionDetection : MonoBehaviour
         }
     }
 
+    // Setting player direction based on turnings at curves;
     private void SetParentDirection()
     {
         if (finalRotation == 0 || finalRotation == 360)
         {
-            playerMovement.CurrentDirection = Direction.Straight;
+            playerMovement.SetDirection(Direction.Straight);
         }
         else if (finalRotation == 90)
         {
-            playerMovement.CurrentDirection = Direction.Right;
+            playerMovement.SetDirection(Direction.Right);
         }
         else
         {
-            playerMovement.CurrentDirection = Direction.Left;
+            playerMovement.SetDirection(Direction.Left);
         }
     }
 }

@@ -3,9 +3,9 @@ using UnityEngine;
 
 public enum ChunkType
 {
-    Basic,
-    Obstacle,
-    Slime
+    Basic, // Plain path with only collectibles
+    Obstacle, // Path with obstacle
+    Slime // Path with slime pools
 }
 
 public enum Direction
@@ -15,6 +15,7 @@ public enum Direction
     Right
 }
 
+// Each chunk is a block in the level with obstacles or slime pools or collectibles based on the type
 [Serializable]
 public class Chunk 
 {

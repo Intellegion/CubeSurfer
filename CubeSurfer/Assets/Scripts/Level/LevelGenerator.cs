@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class LevelGenerator : MonoBehaviour
 {
+    // Fields of all objects that need to be instantiated 
     [SerializeField]
     private GameObject pathObject;
 
@@ -33,9 +34,8 @@ public class LevelGenerator : MonoBehaviour
 
     private Chunk[] chunks;
 
-
+    // Current spawn values used to spawn chunks in the level
     private float currentSpawnX;
-
     private float currentSpawnZ;
 
     private GameObject obstacleWall;
@@ -63,11 +63,13 @@ public class LevelGenerator : MonoBehaviour
         GenerateLevel("Level " + Constants.LEVEL.ToString());
     }        
 
+    // Procedurally generates levels and stores them as an asset
     public void GenerateLevel(string levelName)
     {
         levelData[Level] = ScriptableObject.CreateInstance<LevelData>();
         chunks[0] = Chunk.GetBasicChunk(new Chunk());
 
+        // First chunk is always plain
         path = Instantiate(pathObject, transform, false);
         path.transform.position = new Vector3(currentSpawnX, 0, currentSpawnZ);
         currentSpawnZ += 40;
@@ -79,6 +81,7 @@ public class LevelGenerator : MonoBehaviour
             path.transform.position = new Vector3(currentSpawnX, 0, currentSpawnZ);
             path.transform.rotation = Quaternion.Euler(0, currentDirection == Direction.Straight ? 0 : 90, 0);
 
+            // Spawning the required elements based on the chunk type and current spawn positions
             switch (chunks[i].Type)
             {
                 case ChunkType.Obstacle:
@@ -129,11 +132,14 @@ public class LevelGenerator : MonoBehaviour
                     }
                 default:
                     {
-                        int random = Random.Range(1, 5);
+                        // Spawn collectibles
+
+                        int random = Random.Range(1, 6);
                         int step = 30 / random;
                         GameObject obj;
                         for (int j = 0; j < random; j++)
                         {
+                            // More possibility to spawn coins
                             if (j % 3 == 0)
                             {
                                 obj = pickUpObject;
@@ -161,11 +167,13 @@ public class LevelGenerator : MonoBehaviour
                     }
             }
 
+            // No need to make a curve at the end of the last chunk
             if (i == maxChunks - 1)
             {
                 break;
             }
 
+            // Positioning of curves at every turn based on the current spawn values
             switch (chunks[i].TurnDirection)
             {
                 case Direction.Left:
@@ -230,6 +238,7 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
+        // Instantiating the end of the level based on current spawn values
         switch(currentDirection)
         {
             case Direction.Straight:
@@ -260,6 +269,7 @@ public class LevelGenerator : MonoBehaviour
         SaveLevel(levelName);     
     }
 
+    // Saving level as an asset file on the editor
     private void SaveLevel(string levelName)
     {
         levelData[Level].Chunks = chunks;
@@ -271,6 +281,7 @@ public class LevelGenerator : MonoBehaviour
 #endif
     }
 
+    // Randomizes chunk everytime
     private Chunk GenerateChunk()
     {
         Chunk chunk = new Chunk();
@@ -278,6 +289,7 @@ public class LevelGenerator : MonoBehaviour
 
         chunk.Type = (ChunkType)Random.Range(0, 3);
 
+        // Randomizes spawn positions of obstacles/pools to avoid cluttering and impossible levels
         switch(chunk.Type)
         {
             case ChunkType.Obstacle:
@@ -322,6 +334,7 @@ public class LevelGenerator : MonoBehaviour
         {
             chunk.TurnDirection = Random.Range(0, 2) == 0 ? Direction.Left : Direction.Right;
 
+            // Avoid making two same turns back to back to avoid paths colliding with each other
             if (currentDirection == Direction.Left)
             {
                 chunk.TurnDirection = Direction.Right;         

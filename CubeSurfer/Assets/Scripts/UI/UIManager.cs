@@ -5,6 +5,7 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    // Fields of required UI items
     public CanvasGroup StartPanel;
     public CanvasGroup HUDPanel;
     public CanvasGroup GameOverPanel;
@@ -24,6 +25,7 @@ public class UIManager : MonoBehaviour
         EnableLevels();
     }
 
+    // Common methods to quickly show and hide panels
     public void ShowPanel(CanvasGroup panel)
     {
         panel.alpha = 1;
@@ -38,15 +40,17 @@ public class UIManager : MonoBehaviour
         panel.interactable = false;
     }
 
+    // Enabling buttons only if the user finishes the previous levels
     public void EnableLevels()
     {
-        int progress = PlayerPrefs.GetInt("Progress") + 1;
+        int progress = PlayerPrefs.GetInt("Progress");
         for (int i = 0; i < progress; i++)
         {
             LevelButtons[i].interactable = true;
         }
     }
 
+    // Reloading scene to reset all values
     public void RestartGame()
     {
         SceneManager.LoadScene(0);

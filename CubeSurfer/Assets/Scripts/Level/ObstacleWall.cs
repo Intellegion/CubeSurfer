@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+// Serialized class to store obstacle type and position on chunk
 [Serializable]
 public class ObstacleWall
 {

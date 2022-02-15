@@ -6,6 +6,7 @@ using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // First cube
     public GameObject initialCube;
 
     [SerializeField]
@@ -17,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     public float Velocity;
     public float Sensitivity;
 
+    // Audio fields
     public AudioManager AudioManagerComponent;
     public AudioClip SlimeEffect;
     public AudioClip ObstacleEffect;
@@ -35,10 +37,11 @@ public class PlayerMovement : MonoBehaviour
 
     public int Score;
 
-    public Direction CurrentDirection;
+    
 
     public bool CanControl;
 
+    // Used to clamp movement on path
     public float XClampMin;
     public float XClampMax;
     public float ZClampMin;
@@ -48,15 +51,17 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector3 StartPosition;
 
+    private Direction currentDirection;
     private Vector3 movementVector;
     private float xInput;
     
-
+    // Reference of objects that need to be reset on respawn
     public List<GameObject> cubes = new List<GameObject>();
     public List<GameObject> splashes = new List<GameObject>();
     public List<GameObject> pickups = new List<GameObject>();
 
     private List<GameObject> removedCubes = new List<GameObject>();
+
     private Touch touch;
 
     void Start()
@@ -65,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
         Initialize();
     }
 
+    // Default values on start
     void Initialize()
     {
         XClampMax = 2;
@@ -72,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
 
         ScoreText.text = "0";
 
-        CurrentDirection = Direction.Straight;
+        currentDirection = Direction.Straight;
         CanControl = true;
         movementVector = new Vector2();
 
@@ -85,9 +91,9 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(ClearSplashes());
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Translating the parent in order to make all cubes move at a constant speed
         transform.Translate(Vector3.forward * Velocity * Time.deltaTime);
 
         if (CanControl)
@@ -96,6 +102,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 touch = Input.GetTouch(0);
 
+                // Swipe to move player
                 if (touch.phase == TouchPhase.Moved)
                 {
                     xInput = touch.deltaPosition.x * Sensitivity * Time.deltaTime;
@@ -105,7 +112,8 @@ public class PlayerMovement : MonoBehaviour
             xInput = Input.GetAxisRaw("Horizontal") * Sensitivity * 14 * Time.deltaTime;
             movementVector = transform.position;
 
-            if (CurrentDirection == Direction.Straight)
+            // Position clamps
+            if (currentDirection == Direction.Straight)
             {
                 if (transform.position.x + xInput > XClampMax)
                 {
@@ -120,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
                     movementVector.x += xInput;
                 }
             }
-            else if (CurrentDirection == Direction.Left)
+            else if (currentDirection == Direction.Left)
             {
                 if (transform.position.z + xInput > ZClampMax)
                 {
@@ -155,6 +163,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Stacking cubes on top
     public void IncrementCube()
     {
         GameObject go = Instantiate(PlayerCube, transform, false);
@@ -163,6 +172,7 @@ public class PlayerMovement : MonoBehaviour
         cubes.Add(go);
     }
 
+    // Removing cubes from stack
     public void DecrementCube(GameObject cube = null)
     {
         if (cube != null)
@@ -196,6 +206,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Delay on destroying cubes
     private IEnumerator DestroyCube(GameObject cube)
     {
         yield return new WaitForSeconds(1);
@@ -203,6 +214,7 @@ public class PlayerMovement : MonoBehaviour
         Destroy(cube);
     }
 
+    // Clearing splashes to optimize level
     private IEnumerator ClearSplashes()
     {
         while (true)
@@ -225,6 +237,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Game over functionality
     public void StopMovement(bool bonus = false)
     {
         bool victory = progress >= Constants.MAX_CHUNKS;
@@ -247,6 +260,8 @@ public class PlayerMovement : MonoBehaviour
         levelProgress.OnGameOverEvent.Invoke(victory);
     }
 
+    // Called everytime the user starts a level
+    // Resets everything to normal 
     public void Respawn()
     {
         transform.position = StartPosition;
@@ -283,22 +298,34 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Calculates progress based on the number of chunks crossed
     public void IncreaseProgress()
     {
         progress++;
         ProgressSlider.value = (float) progress / Constants.MAX_CHUNKS;
     }
 
+    // Adding cubes to the stack
     public void CubePickUp()
     {
         AudioManagerComponent.PlayClip(StackEffect);
         IncrementCube();
     }
 
+    // Adds to the score
     public void CoinPickUp()
     {
         AudioManagerComponent.PlayClip(CoinEffect);
         Score++;
         ScoreText.text = Score.ToString();
+    }
+
+    public Direction GetDirection()
+    {
+        return currentDirection;
+    }
+    public void SetDirection(Direction direction)
+    {
+        currentDirection = direction;
     }
 }
